@@ -1,0 +1,98 @@
+.prize-block{
+  max-width: 768px;
+  margin:auto;
+  position: relative;
+  z-index: 5;
+}
+
+.prize-area .bg-bottom{
+  margin-top:16px;
+}
+
+.prizebox{
+  display: flex;
+  justify-content: space-between;
+  width:100%;
+  padding:143px 0;
+}
+
+.prize-left{
+  width:36%;
+}
+
+.prize-left img{
+  max-width: 256px;
+  margin: auto;
+}
+
+.prize-right{
+  text-align: center;
+  font-weight: bold;
+}
+
+.prize-right img{
+  max-width: 456px;
+}
+
+.prize-rule {
+  color:var(--colorWhite);
+  padding:15px 0;
+}
+
+.prize-rule li{
+  font-size:26px;
+}
+
+.prize-rule li:nth-child(4){
+  font-size:18px;
+}
+
+.num-of-peo{
+  font-size:26px;
+  padding-bottom:20px;
+  color:var(--colorWhite);
+}
+
+.num-of-peo span{
+  font-size:52px;
+  font-family: Arial;
+}
+
+.prize-right .gobtn{
+  margin: auto;
+  background-color:var(--colorLakeblue);
+  color:var(--colorWhite);
+  font-size:26px;
+  display: inline-block;
+  padding: 15px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.prize-right .gobtn:hover{
+  margin: auto;
+  background-color:#5ceffa ;
+}
+
+.prize-text{
+  color:var(--colorMoon);
+}
+
+@media only screen and (max-width:  680px) {
+
+  .prizebox{
+      flex-wrap: wrap;
+      padding:20px 0 40px 0;
+  }
+  
+  .prize-left{
+      order: 2;
+      padding-top:20px;
+  }
+  
+  .prize-rule li,.num-of-peo{
+      font-size: 22px;
+  }
+  
+  }
+  

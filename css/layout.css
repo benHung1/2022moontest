@@ -1,0 +1,188 @@
+/* index style start */
+
+.main-visual{
+    max-width: 768px;
+    margin: auto;
+    padding:56px 0 30px 0;
+    position: relative;
+    z-index: 99;
+}
+
+.main-title{
+    max-width: 640px;
+    margin: auto;
+    position: relative;
+}
+
+.dateline{
+    width:21%;
+    max-width: 106px;
+    position: absolute;
+    top:0;
+    left:-8%;
+}
+
+.rule-block{
+    padding:25px 0;
+    line-height: 30px;
+    color:var(--colorWhite);
+}
+
+.rule-block ul li{
+    text-align: center;
+    font-size:22px;
+    font-weight: bold;
+}
+
+.emph{
+    color:var(--colorLakeblue);
+}
+
+.prize-text{
+    color:var(--colorMoon);
+}
+
+.step-block{
+    margin: auto;
+    position: relative;
+}
+
+.step-title{
+    width:280px;    
+    margin:auto;
+    padding-bottom:25px;
+}
+
+.step-box{
+    display: flex;
+    justify-content:center;
+    flex-wrap: wrap;
+}
+
+.step-content{
+    width:100%;
+    max-width: 180px;
+    height:auto;
+    margin:0px 10px;
+    transition: all .3s;
+    padding:10px 0;
+    cursor: pointer;
+}
+
+.step-content:hover{
+    transform: translateY(-10px);
+}
+
+.step-content .step{
+    background-color: var(--colorMainblue);
+    border-radius: 20px 20px 0 0;
+    color:var(--colorWhite);
+    text-align: center;
+    padding:5px 0;
+    font-size:18px;
+    font-weight: bold;
+    position: relative;
+}
+
+.step-content .step::after{
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 5px 0 5px;
+    border-color: var(--colorMainblue) transparent transparent transparent;
+    position: absolute;
+    bottom:-10px;
+    left:50%;
+}
+
+.rules{
+    padding:0 15px 5px 15px;
+    background-color: var(--colorWhite);
+    border-radius: 0 0px 20px 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.rules img{
+    max-width: 90px;
+    margin: auto;
+    padding-top:12px;
+}
+
+.rules > .wheel-icon{
+    max-width: 69px;
+}
+
+.rules p{
+    padding-top:5px;
+}
+
+.rules span{
+    color:var(--colorLightgreen);
+}
+
+
+@media only screen and (max-width:  960px) {
+
+.main-title{
+    padding-top:0;
+}
+
+.dateline{
+    width:16%;
+    top:-29%;
+    left:0;
+}
+
+
+}
+
+@media only screen and (max-width:  768px) {
+
+.prizebox{
+    justify-content: center;
+}
+
+.prize-left {
+    width: 50%;
+}
+
+}
+
+@media only screen and (max-width: 480px) {
+
+
+.rule-block{
+    padding-bottom: 20px;
+    line-height: 25px;
+}
+
+.rule-block ul li {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.step-title {
+    padding-bottom: 20px;
+    width:70%;
+}
+
+.member-info ul .memberber-icon{
+    padding-right:0;
+}
+
+.Abox-content .pointsbox .box-left,.Bbox-content .pointsbox .box-left{
+    width:100%;
+    justify-content: flex-start;
+}
+
+.Abox-content .pointsbox .box-left,.Bbox-content .pointsbox .box-right{
+    width:68%;
+}
+
+}
+    
+
+

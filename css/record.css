@@ -1,0 +1,151 @@
+.record-block{
+  width: 95%;
+  max-width: 768px;
+  padding: 56px 0 30px 0;
+  text-align: center;
+  margin: auto;
+  position: relative;
+  z-index: 5;
+}
+
+/* tab style */
+
+.tab-container{
+  padding-top:15px;
+  margin: auto;
+}
+.etabs { margin: 0; padding: 0; }
+.tab-container .etabs{
+  text-align: left;
+  margin-bottom:-5px;
+}
+.tab { display: inline-block; 
+  zoom:1;
+  background: #fff;
+  border-bottom: none;
+  -moz-border-radius: 10px 10px 0 0;
+  -webkit-border-radius: 10px 10px 0 0; 
+}
+
+.tab a {
+  font-size: 16px;
+  line-height: 40px;
+  display: block;
+  padding: 0 25px;
+  outline: none; 
+  color:#333;
+  cursor: pointer;
+  background-color: #fff;
+  border-radius: 10px 10px 0 0;
+}
+
+.tab.active { background-color: #fff; 
+  padding-top: 10px;
+  position: relative;
+  top: 0px;
+}
+
+.tab a.active { font-weight: bold;
+  color:var(--colorLightgreen);
+  font-size:20px; }
+
+.tab-container .panel-container { 
+  background: #fff;
+  border: solid #666 1px;
+  padding: 10px ;
+  -moz-border-radius: 10px 10px 0 0;
+  -webkit-border-radius: 10px 10px 0 0; 
+}
+
+.tab-container .Abox{
+  background-color: #fff;
+  border-radius: 0px 20px 20px 20px;
+  box-shadow: var(--shadowOut);
+  padding:25px;
+  text-align: left;
+  position: relative;
+}
+
+.Abox-content .pointsbox,.Bbox-content .pointsbox{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:8px 5px;
+  border-bottom:1px dashed #333;
+  font-weight: bold;
+  flex-wrap: wrap;
+  animation: fadeInLeft 1s forwards;
+}
+
+.Abox-content,.Bbox-content{
+  height:320px;
+  overflow: auto;
+}
+
+.Abox-content .pointsbox:hover,.Bbox-content .pointsbox:hover{
+  background-color: rgba(224, 255, 211, 0.1);
+}
+
+.pointsbox span{
+  background-color: var(--colorLightgreen);
+  color:#fff;
+  border-radius:8px;
+  padding:3px 5px;
+  margin-right: 5px;
+  font-size:16px;
+}
+
+.pointsbox .box-right strong{
+  font-size:22px;
+  color:var(--colorOrange);
+}
+
+
+.Abox-content .pointsbox .box-left,.Bbox-content .pointsbox .box-left{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.join-item{
+  color:var(--colorLakeblue);
+  padding-right:5px;
+}
+
+.tab-container .Bbox{
+  background-color: #fff;
+  border-radius: 0px 20px 20px 20px;
+  box-shadow: var(--shadowOut);
+  padding:25px;
+  text-align: left;
+  top:-3px;
+}
+
+
+.recordbox .remind{
+  text-align: left;
+  padding:20px;
+  margin:30px 0;
+  font-weight:bold;
+  font-size:15px;
+  background-color: var(--colorWhite);
+  border-radius: 20px;
+  box-shadow: var(--shadowOut);
+}
+
+.recordbox .remind span{
+  color:var(--colorImportant);
+}
+
+@media only screen and (max-width: 480px) {
+
+.tab-container .Abox,.tab-container .Bbox{
+  padding:10px 10px 20px 10px;
+}
+
+.Bbox-content .pointsbox{
+  justify-content: center;
+  animation: fadeInLeft 1s forwards;
+}
+
+}

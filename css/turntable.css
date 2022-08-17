@@ -1,0 +1,114 @@
+.lucky-block{
+  max-width: 480px;
+  margin: auto;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  padding: 56px 0 30px 0;
+  z-index: 5;
+}
+
+.turntable-area .bg-bottom{
+  margin-top:67px;
+}
+
+.luckybox{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lucky-title{
+  margin-bottom:30px;
+}
+
+.lucky-title img{
+  max-width:326px;
+  margin:auto;
+}
+
+.lucky-btn img{
+  max-width: 104px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.lucky-btn{
+  position: absolute;
+  top:46.5%;
+  left:24%;
+  width:52%;
+  z-index: 10;
+}
+
+.turn{
+  width:44%;
+  margin: auto;
+}
+
+.wheel-block{
+  width:90%;
+  margin:auto;
+}
+
+.wheel{
+  position: relative;
+}
+
+.wheel img{
+  z-index: 5;
+  position: relative;
+}
+
+.wheelbox{
+  width: 92%;
+  position: absolute;
+  bottom: -18%;
+  left: 4%;
+}
+
+.wheel .wheelbox img{
+  max-width: 433px;
+  margin: auto;
+  z-index: 4;
+}
+
+.lucky-arrow{
+  position: absolute;
+  top:-4%;
+  left:43%;
+  width:13%;
+}
+
+.lucky-arrow img{
+  max-width: 59px;
+  margin:auto;
+}
+
+
+.times-info{
+  font-weight: bold;
+  padding:25px 0;
+}
+
+.times-info p{
+  font-size:24px;
+  background-color: var(--colorLightgreen);
+  color:var(--colorWhite);
+  padding:3px 20px;
+  display: inline-block;
+  border-radius: 20px;
+
+}
+
+.times-info p span{
+  font-size:34px;
+}
+
+@media only screen and (max-width: 480px) {
+
+  .lucky-block{
+    height:auto;
+  }
+
+}
