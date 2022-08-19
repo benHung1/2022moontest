@@ -46,7 +46,7 @@ $(document).ready(function () {
 let finalPrize;
 
 let quota;
-var startItem = "";
+let startItem = "";
 
 window.onload = function () {
   getQuota();
@@ -109,11 +109,10 @@ document.getElementById("count").innerText = firstQuota;
 
 //開始
 async function start() {
-  if (!isStatr && firstQuota == 0) {
+  if (!isStatr && firstQuota > 0) {
     isStatr = true;
     await this.getfinalPrize();
     if (startItem != "") {
-      console.log(startItem);
       random = PrizeSon.indexOf(startItem);
       operation(random);
     }
@@ -131,7 +130,7 @@ function operation(ran) {
   if (Prize >= totalNum) {
     Prize = 0;
   }
-  if (firstQuota == 0) {
+  if (firstQuota > 0) {
     wheel.style.transform = "rotate(" + (lenCloc * sun - Prize * 45) + "deg)";
     setTimeout(
       function () {
