@@ -1,4 +1,4 @@
-.lucky-block{
+.lucky-block {
   max-width: 480px;
   margin: auto;
   width: 100%;
@@ -8,107 +8,193 @@
   z-index: 5;
 }
 
-.turntable-area .bg-bottom{
-  margin-top:67px;
+.turntable-area .bg-bottom {
+  margin-top: 67px;
 }
 
-.luckybox{
+.luckybox {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
-.lucky-title{
-  margin-bottom:30px;
+.lucky-title {
+  margin-bottom: 30px;
 }
 
-.lucky-title img{
-  max-width:326px;
-  margin:auto;
+.lucky-title img {
+  max-width: 326px;
+  margin: auto;
 }
 
-.lucky-btn img{
+.lucky-btn img {
   max-width: 104px;
   margin: auto;
   cursor: pointer;
 }
 
-.lucky-btn{
+.lucky-btn {
   position: absolute;
-  top:46.5%;
-  left:24%;
-  width:52%;
+  top: 46.5%;
+  left: 24%;
+  width: 52%;
   z-index: 10;
 }
 
-.turn{
-  width:44%;
+.turn {
+  width: 44%;
   margin: auto;
 }
 
-.wheel-block{
-  width:90%;
-  margin:auto;
+.wheel-block {
+  margin: auto;
 }
 
-.wheel{
+.wheel {
   position: relative;
 }
 
-.wheel img{
+.wheel img {
   z-index: 5;
   position: relative;
 }
 
-.wheelbox{
+.wheelbox {
   width: 92%;
   position: absolute;
   bottom: -18%;
   left: 4%;
 }
 
-.wheel .wheelbox img{
+.wheel .wheelbox img {
   max-width: 433px;
   margin: auto;
   z-index: 4;
 }
 
-.lucky-arrow{
-  position: absolute;
-  top:-4%;
-  left:43%;
-  width:13%;
-}
-
-.lucky-arrow img{
-  max-width: 59px;
-  margin:auto;
-}
-
-
-.times-info{
+.times-info {
   font-weight: bold;
-  padding:25px 0;
+  padding: 25px 0;
 }
 
-.times-info p{
-  font-size:24px;
+.times-info p {
+  font-size: 24px;
   background-color: var(--colorLightgreen);
-  color:var(--colorWhite);
-  padding:3px 20px;
+  color: var(--colorWhite);
+  padding: 3px 20px;
   display: inline-block;
   border-radius: 20px;
-
 }
 
-.times-info p span{
-  font-size:34px;
+.times-info p span {
+  font-size: 34px;
 }
 
 @media only screen and (max-width: 480px) {
-
-  .lucky-block{
-    height:auto;
+  .lucky-block {
+    height: auto;
   }
+  .wheel-block {
+    width: 100%;
+  }
+}
 
+.wheel {
+  background-size: 100% 100%;
+  z-index: 10000;
+  border-radius: 1rem;
+  margin-top: 50px;
+}
+
+.wheelBox {
+  position: relative;
+}
+
+.wheelRound {
+  background: url("../images/lucky-wheel.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: all 3s ease-in-out;
+}
+
+.wheel .wheel-list {
+  width: 432px;
+  height: 432px;
+  position: relative;
+  z-index: 20;
+  display: block;
+  overflow: hidden;
+}
+
+.wheel .wheel-list li {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 84vw;
+  height: 42vw;
+  -moz-transform-origin: center bottom;
+  -webkit-transform-origin: center bottom;
+  -o-transform-origin: center bottom;
+  -ms-transform-origin: center bottom;
+  transform-origin: center bottom;
+}
+
+.wheel .wheel-list li i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: -50%;
+  display: block;
+  width: 100%;
+  height: 100%;
+  content: "";
+  transform: rotate(22.5deg) skewY(45deg);
+}
+
+.wheel .wheel-list .prize {
+  position: relative;
+  margin: 0 auto;
+  padding-top: 20px;
+  width: 50%;
+  overflow: hidden;
+  text-align: center;
+  /* height: 100%; */
+}
+
+.wheel .wheel-list .prize p {
+  color: black;
+  position: absolute;
+  bottom: 4.2rem;
+  width: 100%;
+}
+
+.wheel .wheel-btn {
+  position: absolute;
+  width: 13%;
+  z-index: 40;
+  top: -4%;
+  left: 43%;
+  margin: auto;
+}
+
+.wheel .wheel-btn img {
+  max-width: 59px;
+  margin: auto;
+}
+
+.wheel .submitBtn {
+  height: 70px;
+  width: 70px;
+  margin: 0 auto;
+  cursor: pointer;
+  z-index: 99999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+::marker {
+  font-size: 0;
 }
