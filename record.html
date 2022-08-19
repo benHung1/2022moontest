@@ -129,7 +129,7 @@
                     @mouseover="reloginBtn = true"
                     @mouseleave="reloginBtn = false"
                   >
-                    <ul v-show="reloginBtn">
+                    <ul v-show="reloginBtn" onclick="getUserLogin()">
                       <li class="memberber-icon" v-show="user.memberId==''">
                         請登錄活動編號<span></span>
                       </li>
@@ -137,15 +137,15 @@
                         重新登錄<span></span>
                       </li>
                     </ul>
-                    <ul v-show="!reloginBtn">
-                      <li class="memberber-icon" v-show="user.memberId==''">
+                    <ul v-show="!reloginBtn" id="userLoginNumberList" >
+                      <li id="userLoginNumber" class="memberber-icon" v-show="user.memberId==''">
                         請登錄活動編號<span></span>
                       </li>
-                      <li class="memberber-icon" v-show="user.memberId!=''">
-                        活動編號<span v-html="user.memberId">-</span>
+                      <li id="userLoginEventNumber" class="memberber-icon" v-show="user.memberId!=''">
+                        活動編號<span id="userLoginEventNumberValue"></span>
                       </li>
-                      <li class="member-points" v-show="user.memberId!=''">
-                        目前點數<span v-html="user.point">0</span>點
+                      <li id="userLoginPoint" class="member-points" v-show="user.memberId!=''">
+                        目前點數<span id="userLoginPointValue"></span>點
                       </li>
                     </ul>
                   </div>
@@ -153,7 +153,6 @@
                     <ul class="etabs">
                       <li class="tab">
                         <a
-                          onclick="getUserPointResult()"
                           @click="activetab='RECORD'"
                           v-bind:class="[ activetab === 'RECORD' ? 'active' : '' ]"
                           >已得點數</a
@@ -161,7 +160,6 @@
                       </li>
                       <li class="tab">
                         <a
-                          onclick="getUserTurnTableResult()"
                           @click="activetab='TURNTABLE'"
                           v-bind:class="[ activetab === 'TURNTABLE' ? 'active' : '' ]"
                           >轉盤紀錄</a
@@ -217,7 +215,7 @@
           <a href="prize.html">
             <li class="menu-prize">21天送即食鍋</li>
           </a>
-          <a @click.prevent="toggleDialog('NOTICE')">
+          <a onclick="popupOpen()">
             <li class="menu-notice">注意事項</li>
           </a>
         </ul>
@@ -237,14 +235,14 @@
           <img src="images/facebook-share.png" />
         </a>
       </div>
-      <div id="fade" class="black_overlay" v-show="dialog!=''"></div>
+      <div id="fade" class="black_overlay" ></div>
       <!-- Notice Page Start -->
-      <div class="popup" id="noticepage" v-show="dialog=='NOTICE'">
+      <div class="popup" id="noticepage" >
         <div class="popupbox">
           <div class="notice-block">
             <div class="noticebox">
               <div class="closed">
-                <a href="#" @click.prevent="toggleDialog('NOTICE')">
+                <a href="#" onclick="popupClosed()">
                   <img src="images/closed.png" />
                 </a>
               </div>
@@ -291,17 +289,17 @@
       </div>
       <!-- Notice Page end -->
       <!-- Login Page Start -->
-      <div class="popup" v-show="dialog=='LOGIN'">
+      <div class="popup" id="popup">
         <div class="popupbox">
           <div class="login-block">
-            <div class="closed" @click.prevent="toggleDialog('LOGIN')">
+            <div class="closed" onclick="popupClosed()">
               <img src="images/closed.png" />
             </div>
             <div class="loginbox">
               <p class="login-title">請輸入您的會員活動編號</p>
-              <input type="text" v-model="user.inputMemberId" maxlength="7" />
-              <div class="summit" @click.prevent="login()">送出</div>
-              <span @click.prevent="toggleDialog('MYID')"
+              <input type="text" v-model="user.inputMemberId" maxlength="7" id="userNumberInput" />
+              <div class="summit" onclick="getUserId()">送出</div>
+              <span onclick="memberNumber()"
                 >Q：會員編號在哪裡</span
               >
               <div>
@@ -318,8 +316,7 @@
           <div class="iphonebox">
             <div class="closed">
               <a
-                @click.prevent="toggleDialog('')"
-                @click.prevent="toggleDialog('LOGIN')"
+              onclick="popupClosed()"
               >
                 <img src="images/closed.png" />
               </a>

@@ -10,6 +10,10 @@
 
 /* tab style */
 
+.popup {
+  display: none;
+}
+
 .tab-container{
   padding-top:15px;
   margin: auto;
@@ -148,4 +152,8 @@
   animation: fadeInLeft 1s forwards;
 }
 
+}
+
+#fade {
+  display: none;
 }
