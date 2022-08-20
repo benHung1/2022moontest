@@ -69,15 +69,15 @@
                         <!-- Dailybonus Area start -->
                         <section class="content-block">
                             <div class="signbox">
-                                <div class="member-info" @mouseover="reloginBtn = true" @mouseleave="reloginBtn = false" @click.prevent="toggleDialog('LOGIN')">
-                                    <ul v-show = "reloginBtn">
+                                <div class="member-info" @mouseover="reloginBtn = true" @mouseleave="reloginBtn = false" >
+                                    <ul v-show = "reloginBtn" onclick="getUserLogin()">
                                         <li class="memberber-icon" v-show="user.memberId==''">請登錄活動編號<span></span></li>
                                         <li class="memberber-icon" v-show="user.memberId!=''">重新登錄<span></span></li>
                                     </ul>
-                                    <ul v-show = "!reloginBtn">
-                                        <li class="memberber-icon" v-show="user.memberId==''">請登錄活動編號<span></span></li>
-                                        <li class="memberber-icon" v-show="user.memberId!=''">活動編號<span v-html="user.memberId">-</span></li>
-                                        <li class="member-points" v-show="user.memberId!=''">目前點數<span v-html="user.point">0</span>點</li>
+                                    <ul v-show = "!reloginBtn" id="userLoginNumberList">
+                                        <li id="userLoginNumber"class="memberber-icon" v-show="user.memberId==''">請登錄活動編號<span></span></li>
+                                        <li id="userLoginEventNumber" class="memberber-icon" v-show="user.memberId!=''">活動編號<span id="userLoginEventNumberValue"></span></li>
+                                        <li id="userLoginPoint" class="member-points" v-show="user.memberId!=''">目前點數<span id="userLoginPointValue"></span>點</li>
                                     </ul>
                                 </div>
                                 <div class="signbtn-block">
@@ -219,7 +219,7 @@
                     <a href="prize.html">
                         <li class="menu-prize">21天送即食鍋</li>
                     </a>
-                    <a @click.prevent="toggleDialog('NOTICE')">
+                    <a onclick="popupOpen()">
                         <li class="menu-notice">注意事項</li>
                     </a>
                 </ul>
@@ -245,7 +245,7 @@
                     <div class="notice-block">
                         <div class="noticebox">
                             <div class="closed" >
-                                <a href="#" @click.prevent="toggleDialog('NOTICE')">
+                                <a href="#" onclick="popupClosed()">
                                     <img src="images/closed.png" >
                                 </a>
                             </div>
@@ -269,17 +269,17 @@
             </div>
             <!-- Notice Page End -->
             <!-- Login Page Start -->
-            <div class="popup" v-show="dialog=='LOGIN'">
+            <div class="popup" id="popup">
                 <div class="popupbox">
                     <div class="login-block">
-                        <div class="closed" @click.prevent="toggleDialog('LOGIN')">
+                        <div class="closed" onclick="popupClosed()">
                             <img src="images/closed.png">
                         </div>
                         <div class="loginbox">
                             <p class="login-title">請輸入您的會員活動編號</p>
-                            <input type="text"  v-model="user.inputMemberId" maxlength="7">
-                            <div class="summit" @click.prevent="login()">送出</div>
-                            <span @click.prevent="toggleDialog('MYID')">Q：會員編號在哪裡</span>
+                            <input type="text" id="userNumberInput"  v-model="user.inputMemberId" maxlength="7">
+                            <div class="summit" onclick="getUserId()">送出</div>
+                            <span onclick="memberNumber()">Q：會員編號在哪裡</span>
                             <div>*根據您輸入的「會員編號」相關資料於活動結束後發送得獎通知訊息，請自行維護。按下送出鍵後則無法修改。</div>
                         </div>
                     </div>
@@ -289,7 +289,7 @@
             <!-- News Exam Page Start -->
             <div class="popup" v-show="dialog=='QUIZ'">
                 <div class="popupbox">
-                    <div class="exam-block" :class="examBlockClass">
+                    <div class="exam-block">
                         <div class="closed" @click.prevent="toggleDialog('')"><img src="images/closed.png"></div>
                         <div class="exambox">
                             <p class="title">新聞隨堂考</p>
@@ -347,7 +347,7 @@
                 <div class="popupbox ">
                     <div class="iphonebox">
                         <div class="closed">
-                            <a @click.prevent="toggleDialog('')" @click.prevent="toggleDialog('LOGIN')">
+                            <a  onclick="popupClosed()">
                                 <img src="images/closed.png">
                             </a>
                         </div>

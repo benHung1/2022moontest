@@ -13,6 +13,11 @@
   margin: auto;
 }
 
+.popup {
+  display: none;
+}
+
+
 .sign ul{
   background-color: var(--colorWhite);
   box-shadow: var(--shadowOut);
