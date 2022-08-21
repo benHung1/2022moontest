@@ -239,7 +239,7 @@
           <a href="prize.html">
             <li class="menu-prize">21天送即食鍋</li>
           </a>
-          <a @click.prevent="toggleDialog('NOTICE')">
+          <a onclick="popupOpen()">
             <li class="menu-notice">注意事項</li>
           </a>
         </ul>
@@ -272,7 +272,7 @@
           <div class="notice-block">
             <div class="noticebox">
               <div class="closed">
-                <a href="#" @click.prevent="toggleDialog('NOTICE')">
+                <a href="#" onclick="popupClosed()">
                   <img src="images/closed.png" />
                 </a>
               </div>

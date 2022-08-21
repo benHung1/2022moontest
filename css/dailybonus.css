@@ -17,6 +17,13 @@
   display: none;
 }
 
+.signtoday-btn,.signtomorrow-btn,#newsbtn-exam {
+  display: none;
+}
+
+#openBook {
+  cursor: pointer;
+}
 
 .sign ul{
   background-color: var(--colorWhite);

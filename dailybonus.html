@@ -81,104 +81,104 @@
                                     </ul>
                                 </div>
                                 <div class="signbtn-block">
-                                    <div class="loginbtn-start" v-show="!user.signed && user.memberId==''" @click.prevent="toggleDialog('LOGIN')">登錄簽到開始集點</div>
-                                    <div class="signtoday-btn" v-show="!user.signed && user.memberId!=''" @click.prevent="sign()">今日簽到+10點</div>
-                                    <div class="signtomorrow-btn" v-show="user.signed">明日簽到+10點</div>
-                                    <div class="newsbtn-exam" v-show="user.signed && user.quizTimes < 2" @click.prevent="showQuestion()"><b class="tag float">答對新聞隨堂考+5點</b>集多點!</div>
-                                    <div class="newsbtn-exam grey" v-show="!user.signed || user.quizTimes >= 2"><b class="tag float">答對中秋大會烤+5點</b>集多點!</div>
+                                    <div class="loginbtn-start" id="loginbtn-start" onclick="getUserLogin ()">登錄簽到開始集點</div>
+                                    <div class="signtoday-btn" id="signtoday-btn">今日簽到+10點</div>
+                                    <div class="signtomorrow-btn" id="signtomorrow-btn" >明日簽到+10點</div>
+                                    <div class="newsbtn-exam" id="newsbtn-exam" onclick="getNewsPopup()"><b class="tag float">答對新聞隨堂考+5點</b>集多點!</div>
+                                    <div class="newsbtn-exam grey" id="newsbtn-exam grey"><b class="tag float">答對中秋大會烤+5點</b>集多點!</div>
                                 </div>
                                 <div class="sign">
-                                    <ul>
+                                    <ul id="dailyList">
                                         <li>
-                                            <div class="normal-box" :class="{'finished':dailyBonus.length >= 1}">DAY 1</div>
+                                            <div class="normal-box" >DAY 1</div>
                                             <div class="pointsbox">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="normal-box" :class="{'finished':dailyBonus.length >= 2}">DAY 2</div>
+                                            <div class="normal-box">DAY 2</div>
                                             <div class="pointsbox">+10點</div>
                                         </li>
                                         <li>
                                             <!-- 簽到完開彩蛋隱藏surprisetag -->
-                                            <div class="surprisetag" v-show="dailyBonus.length < 3"></div>
-                                            <div class="surprise-box" :class="{'finished':dailyBonus.length >= 3}">DAY 3</div>
+                                            <div class="surprisetag"></div>
+                                            <div class="surprise-box normal-box" >DAY 3</div>
                                             <div class="surprise-points">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="normal-box" :class="{'finished':dailyBonus.length >= 4}">DAY 4</div>
+                                            <div class="normal-box" >DAY 4</div>
                                             <div class="pointsbox">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="normal-box" :class="{'finished':dailyBonus.length >= 5}">DAY 5</div>
+                                            <div class="normal-box" >DAY 5</div>
                                             <div class="pointsbox">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="surprisetag" v-show="dailyBonus.length < 6"></div>
-                                            <div class="surprise-box" :class="{'finished':dailyBonus.length >= 6}">DAY 6</div>
+                                            <div class="surprisetag"></div>
+                                            <div class="surprise-box normal-box" >DAY 6</div>
                                             <div class="surprise-points">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="normal-box" :class="{'finished':dailyBonus.length >= 7}">DAY 7</div>
+                                            <div class="normal-box" >DAY 7</div>
                                             <div class="pointsbox">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="normal-box" :class="{'finished':dailyBonus.length >= 8}">DAY 8</div>
+                                            <div class="normal-box" >DAY 8</div>
                                             <div class="pointsbox">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="surprisetag" v-show="dailyBonus.length < 9"></div>
-                                            <div class="surprise-box" :class="{'finished':dailyBonus.length >= 9}">DAY 9</div>
+                                            <div class="surprisetag" ></div>
+                                            <div class="surprise-box normal-box" >DAY 9</div>
                                             <div class="surprise-points">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="normal-box" :class="{'finished':dailyBonus.length >= 10}">DAY 10</div>
+                                            <div class="normal-box" >DAY 10</div>
                                             <div class="pointsbox">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="normal-box" :class="{'finished':dailyBonus.length >= 11}">DAY 11</div>
+                                            <div class="normal-box" >DAY 11</div>
                                             <div class="pointsbox">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="surprisetag" v-show="dailyBonus.length < 12"></div>
-                                            <div class="surprise-box" :class="{'finished':dailyBonus.length >= 12}">DAY 12</div>
+                                            <div class="surprisetag"></div>
+                                            <div class="surprise-box normal-box" >DAY 12</div>
                                             <div class="surprise-points">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="normal-box" :class="{'finished':dailyBonus.length >= 13}">DAY 13</div>
+                                            <div class="normal-box" >DAY 13</div>
                                             <div class="pointsbox">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="normal-box" :class="{'finished':dailyBonus.length >= 14}">DAY 14</div>
+                                            <div class="normal-box" >DAY 14</div>
                                             <div class="pointsbox">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="surprisetag" v-show="dailyBonus.length < 15"></div>
-                                            <div class="surprise-box" :class="{'finished':dailyBonus.length >= 15}">DAY 15</div>
+                                            <div class="surprisetag" ></div>
+                                            <div class="surprise-box normal-box" >DAY 15</div>
                                             <div class="surprise-points">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="normal-box" :class="{'finished':dailyBonus.length >= 16}">DAY 16</div>
+                                            <div class="normal-box" >DAY 16</div>
                                             <div class="pointsbox">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="normal-box" :class="{'finished':dailyBonus.length >= 17}">DAY 17</div>
+                                            <div class="normal-box" >DAY 17</div>
                                             <div class="pointsbox">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="surprisetag" v-show="dailyBonus.length < 18"></div>
-                                            <div class="surprise-box" :class="{'finished':dailyBonus.length >= 18}">DAY 18</div>
+                                            <div class="surprisetag" ></div>
+                                            <div class="surprise-box normal-box" >DAY 18</div>
                                             <div class="surprise-points">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="normal-box" :class="{'finished':dailyBonus.length >= 19}">DAY 19</div>
+                                            <div class="normal-box" >DAY 19</div>
                                             <div class="pointsbox">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="normal-box" :class="{'finished':dailyBonus.length >= 20}">DAY 20</div>
+                                            <div class="normal-box" >DAY 20</div>
                                             <div class="pointsbox">+10點</div>
                                         </li>
                                         <li>
-                                            <div class="surprisetag" v-show="dailyBonus.length < 21"></div>
-                                            <div class="surprise-box" :class="{'finished':dailyBonus.length >= 21}">DAY 21</div>
+                                            <div class="surprisetag" ></div>
+                                            <div class="surprise-box normal-box">DAY 21</div>
                                             <div class="surprise-points">+10點</div>
                                             <div class="prize-icon"></div>
                                         </li>
@@ -287,18 +287,18 @@
             </div>
             <!-- Login Page End -->
             <!-- News Exam Page Start -->
-            <div class="popup" v-show="dialog=='QUIZ'">
+            <div class="popup" id="newsPopup">
                 <div class="popupbox">
                     <div class="exam-block">
-                        <div class="closed" @click.prevent="toggleDialog('')"><img src="images/closed.png"></div>
+                        <div class="closed" onclick="popupClosed()" ><img src="images/closed.png"></div>
                         <div class="exambox">
                             <p class="title">新聞隨堂考</p>
-                            <div class="question">Q：{{question.question}}</div>
+                            <div class="question" id="question">Q：</div>
                             <div class="answer-block">
-                                <div class="answerA" @click.prevent="pickAnswer('0')">A.{{question.options[0]}}</div>
-                                <div class="answerB" @click.prevent="pickAnswer('1')">B.{{question.options[1]}}</div>
+                                <div class="answerA" id="answerA" onclick="getNewsAnswerA()" >A.</div>
+                                <div class="answerB" id="answerB">B.</div>
                             </div>
-                            <span @click="window.open(question.url)">Open book偷看答案</span>
+                            <span id="openBook">Open book偷看答案</span>
                         </div>
                         <!-- True -->
                         <div class="share-exam" v-show="isAnswer == 'TRUE'" >
@@ -327,16 +327,16 @@
             </div>
             <!-- News Exam Page End -->
             <!-- Surprize Page Start -->
-            <div class="popup" v-show="dialog=='SURPRISE'" >
+            <div class="popup" id="eggpopup">
                 <div class="popupbox">
                     <div class="egg-block">
-                        <div class="closed" @click.prevent="toggleDialog('')"><img src="images/closed.png"></div>
+                        <div class="closed" onclick="popupClosed()"><img src="images/closed.png"></div>
                         <div class="eggbox">
                             <div class="egg">
                                 <img src="images/egg.png">
                             </div>
                             <div class="egg-tag">彩蛋獎勵</div>
-                            <div class="getpoints">目前點數<b class="points">{{surprise.description}}<span>點</span></b></div>
+                            <div class="getpoints">點數<b class="points" id="surprisePoints"><span>點</span></b></div>
                         </div>
                     </div>
                 </div>
