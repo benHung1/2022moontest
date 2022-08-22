@@ -93,8 +93,10 @@ function getUserId() {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
+        // auth
       },
       body: JSON.stringify({
+        // 第一次要帶
         id: `${userNumber}`,
       }),
     })
@@ -125,88 +127,100 @@ function getUserId() {
             siginFinished = document.getElementsByClassName("finished")[i];
             // console.log(siginFinished.classList.contains("finished") == true);
           }
-          document
-            .getElementById("signtoday-btn")
-            .addEventListener("click", function () {
-              notSigninFinished = document.getElementsByClassName(
-                "normal-box-container"
-              )[0];
-              document.getElementById("signtoday-btn").style.display = "none";
-              document.getElementById("signtomorrow-btn").style.display =
-                "block";
-
-              // 代表從第一天開始
-              if (siginFinished == undefined) {
-                notSigninFinished.classList.add("finished");
-              } else {
-                siginFinished.nextElementSibling.classList.add("finished");
-                // 如果簽到天數為三的位數 && 前面兩天都有簽到的話
-                if (
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 3" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[0]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[1]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 6" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[3]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[4]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 9" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[6]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[7]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 12" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[9]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[10]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 15" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[12]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[13]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 18" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[15]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[16]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 21" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[19]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[20]
-                      .classList.contains("finished") == true)
-                ) {
-                  document.getElementById("eggpopup").style.display = "block";
-                  document.getElementById("fade").style.display = "block";
-                  document.getElementById("surprisePoints").innerText =
-                    "finalData.bouns.point點";
-                }
-              }
-            });
         }
+        // 登入成功後簽到按鈕
+
+        document
+          .getElementById("signtoday-btn")
+          .addEventListener("click", function () {
+            fetch("https://event.setn.com/api/2022moonTest/signin")
+              .then((data) => {
+                return data.json();
+              })
+              .then((finalData) => {
+                console.log(finalData);
+                notSigninFinished = document.getElementsByClassName(
+                  "normal-box-container"
+                )[0];
+                document.getElementById("signtoday-btn").style.display = "none";
+                document.getElementById("signtomorrow-btn").style.display =
+                  "block";
+
+                // 代表從第一天開始
+                if (siginFinished == undefined) {
+                  notSigninFinished.classList.add("finished");
+                } else {
+                  siginFinished.nextElementSibling.classList.add("finished");
+                  // 如果簽到天數為三的位數 && 前面兩天都有簽到的話
+                  if (
+                    (siginFinished.nextElementSibling.firstElementChild
+                      .innerText == "DAY 3" &&
+                      document
+                        .getElementsByClassName("normal-box-container")[0]
+                        .classList.contains("finished") == true &&
+                      document
+                        .getElementsByClassName("normal-box-container")[1]
+                        .classList.contains("finished") == true) ||
+                    (siginFinished.nextElementSibling.firstElementChild
+                      .innerText == "DAY 6" &&
+                      document
+                        .getElementsByClassName("normal-box-container")[3]
+                        .classList.contains("finished") == true &&
+                      document
+                        .getElementsByClassName("normal-box-container")[4]
+                        .classList.contains("finished") == true) ||
+                    (siginFinished.nextElementSibling.firstElementChild
+                      .innerText == "DAY 9" &&
+                      document
+                        .getElementsByClassName("normal-box-container")[6]
+                        .classList.contains("finished") == true &&
+                      document
+                        .getElementsByClassName("normal-box-container")[7]
+                        .classList.contains("finished") == true) ||
+                    (siginFinished.nextElementSibling.firstElementChild
+                      .innerText == "DAY 12" &&
+                      document
+                        .getElementsByClassName("normal-box-container")[9]
+                        .classList.contains("finished") == true &&
+                      document
+                        .getElementsByClassName("normal-box-container")[10]
+                        .classList.contains("finished") == true) ||
+                    (siginFinished.nextElementSibling.firstElementChild
+                      .innerText == "DAY 15" &&
+                      document
+                        .getElementsByClassName("normal-box-container")[12]
+                        .classList.contains("finished") == true &&
+                      document
+                        .getElementsByClassName("normal-box-container")[13]
+                        .classList.contains("finished") == true) ||
+                    (siginFinished.nextElementSibling.firstElementChild
+                      .innerText == "DAY 18" &&
+                      document
+                        .getElementsByClassName("normal-box-container")[15]
+                        .classList.contains("finished") == true &&
+                      document
+                        .getElementsByClassName("normal-box-container")[16]
+                        .classList.contains("finished") == true) ||
+                    (siginFinished.nextElementSibling.firstElementChild
+                      .innerText == "DAY 21" &&
+                      document
+                        .getElementsByClassName("normal-box-container")[19]
+                        .classList.contains("finished") == true &&
+                      document
+                        .getElementsByClassName("normal-box-container")[20]
+                        .classList.contains("finished") == true)
+                  ) {
+                    document.getElementById("eggpopup").style.display = "block";
+                    document.getElementById("fade").style.display = "block";
+                    document.getElementById("surprisePoints").innerText =
+                      "finalData.bouns.point點";
+                  }
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          });
       })
       .catch((error) => {
         console.log(error);

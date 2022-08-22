@@ -69,6 +69,7 @@ async function getQuota() {
 async function getfinalPrize() {
   await fetch("https://event.setn.com/api/2022moonTest/spinToWin", {
     method: "POST",
+    mode: "cors",
   })
     .then((data) => {
       return data.json();
@@ -148,17 +149,15 @@ function operation(ran) {
 
 // 注意事項彈窗
 
-
 function popupOpen() {
-  document.getElementById('fade').style.display = 'block';
-  document.getElementsByClassName('popup')[0].style.display = 'block'
-  document.getElementById('noticepage').style.display = 'block'
+  document.getElementById("fade").style.display = "block";
+  document.getElementsByClassName("popup")[0].style.display = "block";
+  document.getElementById("noticepage").style.display = "block";
 }
 
 // 關閉彈窗
 
 function popupClosed() {
-  document.getElementById('noticepage').style.display = 'none'
-  document.getElementById('fade').style.display = 'none';
+  document.getElementById("noticepage").style.display = "none";
+  document.getElementById("fade").style.display = "none";
 }
-
