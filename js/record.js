@@ -42,6 +42,46 @@ $(document).ready(function () {
 
 // 從這開始 從這開始 從這開始 從這開始 從這開始
 
+window.onload = function () {
+  getUserIdFirst();
+}
+
+function getUserIdFirst () {
+  fetch("https://event.setn.com/api/2022moonTest/signin", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      'Authorization': 'token',
+    },
+    // body: JSON.stringify({
+    //   id: `${userNumber}`,
+    // }),
+  })
+    .then((data) => {
+      return data.json();
+    })
+    .then((finalData) => {
+      console.log(finalData);
+      localStorage.setItem("userId", finalData.id);
+      popupClosed();
+      document.getElementById("userLoginNumber").style.display = "none";
+      document.getElementById("userLoginEventNumber").style.display = "block";
+      document.getElementById("userLoginPoint").style.display = "block";
+      document.getElementById("userLoginEventNumberValue").innerText =
+        finalData.id;
+      document.getElementById("userLoginPointValue").innerText =
+        finalData.point;
+      getUserPointResult();
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("請輸入正確的活動編號");
+      return false;
+    });
+
+}
+
 let userId;
 
 function getUserId() {
@@ -55,6 +95,7 @@ function getUserId() {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
+        'Authorization': 'token',
       },
       body: JSON.stringify({
         id: `${userNumber}`,
@@ -128,7 +169,12 @@ function getUserPointResult() {
 
   let pointResult = document.getElementById("pointResult");
 
-  fetch("https://event.setn.com/api/2022moonTest/point/histories")
+  fetch("https://event.setn.com/api/2022moonTest/point/histories",{
+    headers: {
+      "Content-Type": "application/json",
+      'Authorization': 'token',
+    },
+  })
     .then((data) => {
       return data.json();
     })
@@ -171,6 +217,11 @@ function getUserTurnTableResult() {
   fetch("https://event.setn.com/api/2022moonTest/spinToWin/histories", {
     method: "POST",
     mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      'Authorization': 'token',
+    },
+
   })
     .then((data) => {
       return data.json();

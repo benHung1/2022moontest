@@ -53,7 +53,12 @@ window.onload = function () {
 };
 
 async function getQuota() {
-  await fetch("https://event.setn.com/api/2022moonTest/spinToWin")
+  await fetch("https://event.setn.com/api/2022moonTest/spinToWin", {
+    headers: {
+      "Content-Type": "application/json",
+      'Authorization': 'token',
+    },
+  })
     .then((data) => {
       return data.json();
     })
@@ -70,6 +75,10 @@ async function getfinalPrize() {
   await fetch("https://event.setn.com/api/2022moonTest/spinToWin", {
     method: "POST",
     mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      'Authorization': 'token',
+    },
   })
     .then((data) => {
       return data.json();
@@ -108,18 +117,24 @@ turn = 4; //轉盤最低幾圈 你想幾圈
 let firstQuota = localStorage.getItem("firstQuota");
 document.getElementById("count").innerText = firstQuota;
 
+let finalQuota;
+
 //開始
 async function start() {
+  finalQuota = localStorage.getItem("finalQuota");
+
   if (!isStatr && firstQuota > 0) {
     isStatr = true;
     await this.getfinalPrize();
     if (startItem != "") {
       random = PrizeSon.indexOf(startItem);
       operation(random);
+    } 
+    else {
+      return false;
     }
-  } else {
-    alert("您剩餘次數不足");
-    return false;
+  } else if (firstQuota == 0 && !isStatr) {
+    alert('剩餘次數不足喔')
   }
 }
 
@@ -131,20 +146,18 @@ function operation(ran) {
   if (Prize >= totalNum) {
     Prize = 0;
   }
-  if (firstQuota > 0) {
+  if (finalQuota > 0) {
     wheel.style.transform = "rotate(" + (lenCloc * sun - Prize * 45) + "deg)";
     setTimeout(
       function () {
         alert(PrizeSon[Prize]); //傳什麼給你什麼
         isStatr = false;
-        firstQuota--;
         // 取出轉完的扣打
-        let finalQuota = localStorage.getItem("finalQuota");
         document.getElementById("count").innerText = finalQuota;
       }.bind(this),
       3000
     );
-  }
+  } 
 }
 
 // 注意事項彈窗
