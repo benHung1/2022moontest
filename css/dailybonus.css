@@ -272,6 +272,18 @@
   z-index: 1;
 }
 
+.share-exam-true-container {
+  position: relative;
+  background-color: #fff;
+  border-radius: 20px;
+  max-width: 480px;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  box-sizing: border-box;
+  font-weight: bold;
+}
+
 .exambox{
   padding:25px 30px 40px 30px;
   max-width: 375px;
@@ -323,7 +335,10 @@
   width:58%;
   margin: auto;
   z-index: 2;
-  
+}
+
+#share-exam-true, #share-exam-false, #share-exam-share,#share-exam-over{
+  display:  none;
 }
 
 .over-title{
