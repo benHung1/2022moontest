@@ -333,7 +333,9 @@
       <!-- Footer End -->
       <!-- Facebook Share -->
       <div class="share-icon">
-        <a @click.prevent="FacebookShare()">
+        <a
+          onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=https://event.setn.com/share/moontest2022/')"
+        >
           <img src="images/facebook-share.png" />
         </a>
       </div>
@@ -433,7 +435,9 @@
                   B.
                 </div>
               </div>
-              <span id="openBook">Open book偷看答案</span>
+              <span id="openBook" onclick="getOpenBookUrl()"
+                >Open book偷看答案</span
+              >
             </div>
             <!-- True -->
             <div class="share-exam" id="share-exam-true">

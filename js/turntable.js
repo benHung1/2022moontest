@@ -39,7 +39,7 @@ $(document).ready(function () {
   vm = new Vue(app);
 });
 
-// 從這開始
+// 從這開始 從這開始 從這開始 從這開始 從這開始 從這開始 從這開始
 
 // 進來先打第一隻api
 
@@ -49,14 +49,18 @@ let quota;
 let startItem = "";
 
 window.onload = function () {
-  getQuota();
+  if (localStorage.getItem("token") !== null) {
+    getQuota();
+  } else {
+    console.log("有妳媽token");
+  }
 };
 
 async function getQuota() {
   await fetch("https://event.setn.com/api/2022moonTest/spinToWin", {
     headers: {
       "Content-Type": "application/json",
-      'Authorization': 'token',
+      Authorization: "token",
     },
   })
     .then((data) => {
@@ -77,7 +81,7 @@ async function getfinalPrize() {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      'Authorization': 'token',
+      Authorization: "token",
     },
   })
     .then((data) => {
@@ -129,12 +133,11 @@ async function start() {
     if (startItem != "") {
       random = PrizeSon.indexOf(startItem);
       operation(random);
-    } 
-    else {
+    } else {
       return false;
     }
   } else if (firstQuota == 0 && !isStatr) {
-    alert('剩餘次數不足喔')
+    alert("剩餘次數不足喔");
   }
 }
 
@@ -157,7 +160,7 @@ function operation(ran) {
       }.bind(this),
       3000
     );
-  } 
+  }
 }
 
 // 注意事項彈窗

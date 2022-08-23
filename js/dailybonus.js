@@ -84,17 +84,20 @@ let dailyQuota;
 
 let finalDailyQuota;
 
-
 window.onload = function () {
-  getUserIdFirst();
-}
+  if (localStorage.getItem("token") !== null) {
+    getUserIdFirst();
+  } else {
+    console.log("有妳媽token");
+  }
+};
 
-function getUserIdFirst () {
+function getUserIdFirst() {
   fetch("https://event.setn.com/api/2022moonTest/signin", {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      'Authorization': 'token',
+      Authorization: "token",
     },
   })
     .then((data) => {
@@ -103,6 +106,8 @@ function getUserIdFirst () {
     .then((finalData) => {
       console.log(finalData);
       localStorage.setItem("userId", finalData.id);
+      localStorage.setItem("token", finalData.token);
+
       popupClosed();
       document.getElementById("userLoginNumber").style.display = "none";
       document.getElementById("userLoginEventNumber").style.display = "block";
@@ -129,12 +134,12 @@ function getUserIdFirst () {
         .getElementById("signtoday-btn")
         .addEventListener("click", function () {
           fetch("https://event.setn.com/api/2022moonTest/signin", {
-            method: 'POST',
-            mode: 'cors',
+            method: "POST",
+            mode: "cors",
             headers: {
               "Content-Type": "application/json",
-              'Authorization': 'token',
-            },        
+              Authorization: "token",
+            },
           })
             .then((data) => {
               return data.json();
@@ -144,78 +149,81 @@ function getUserIdFirst () {
               notSigninFinished = document.getElementsByClassName(
                 "normal-box-container"
               )[0];
-              document.getElementById("signtoday-btn").style.display = "none";
-              document.getElementById("signtomorrow-btn").style.display =
-                "block";
-
-              // 代表從第一天開始
-              if (siginFinished == undefined) {
-                notSigninFinished.classList.add("finished");
-              } else {
-                siginFinished.nextElementSibling.classList.add("finished");
-                // 如果簽到天數為三的位數 && 前面兩天都有簽到的話
-                if (
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 3" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[0]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[1]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 6" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[3]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[4]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 9" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[6]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[7]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 12" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[9]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[10]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 15" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[12]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[13]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 18" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[15]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[16]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 21" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[19]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[20]
-                      .classList.contains("finished") == true)
-                ) {
-                  document.getElementById("eggpopup").style.display = "block";
-                  document.getElementById("fade").style.display = "block";
-                  document.getElementById("surprisePoints").innerText =
-                    `${finalData.bouns.point}點`;
+              if (!finalData.signin.signed) {
+                // 代表本日還沒簽到
+                document.getElementById("signtomorrow-btn").style.display =
+                  "block";
+                document.getElementById("signtoday-btn").style.display = "none";
+                // 代表從第一天開始
+                if (siginFinished == undefined) {
+                  notSigninFinished.classList.add("finished");
+                } else {
+                  siginFinished.nextElementSibling.classList.add("finished");
+                  // 如果簽到天數為三的位數 && 前面兩天都有簽到的話
+                  if (
+                    (siginFinished.nextElementSibling.firstElementChild
+                      .innerText == "DAY 3" &&
+                      document
+                        .getElementsByClassName("normal-box-container")[0]
+                        .classList.contains("finished") == true &&
+                      document
+                        .getElementsByClassName("normal-box-container")[1]
+                        .classList.contains("finished") == true) ||
+                    (siginFinished.nextElementSibling.firstElementChild
+                      .innerText == "DAY 6" &&
+                      document
+                        .getElementsByClassName("normal-box-container")[3]
+                        .classList.contains("finished") == true &&
+                      document
+                        .getElementsByClassName("normal-box-container")[4]
+                        .classList.contains("finished") == true) ||
+                    (siginFinished.nextElementSibling.firstElementChild
+                      .innerText == "DAY 9" &&
+                      document
+                        .getElementsByClassName("normal-box-container")[6]
+                        .classList.contains("finished") == true &&
+                      document
+                        .getElementsByClassName("normal-box-container")[7]
+                        .classList.contains("finished") == true) ||
+                    (siginFinished.nextElementSibling.firstElementChild
+                      .innerText == "DAY 12" &&
+                      document
+                        .getElementsByClassName("normal-box-container")[9]
+                        .classList.contains("finished") == true &&
+                      document
+                        .getElementsByClassName("normal-box-container")[10]
+                        .classList.contains("finished") == true) ||
+                    (siginFinished.nextElementSibling.firstElementChild
+                      .innerText == "DAY 15" &&
+                      document
+                        .getElementsByClassName("normal-box-container")[12]
+                        .classList.contains("finished") == true &&
+                      document
+                        .getElementsByClassName("normal-box-container")[13]
+                        .classList.contains("finished") == true) ||
+                    (siginFinished.nextElementSibling.firstElementChild
+                      .innerText == "DAY 18" &&
+                      document
+                        .getElementsByClassName("normal-box-container")[15]
+                        .classList.contains("finished") == true &&
+                      document
+                        .getElementsByClassName("normal-box-container")[16]
+                        .classList.contains("finished") == true) ||
+                    (siginFinished.nextElementSibling.firstElementChild
+                      .innerText == "DAY 21" &&
+                      document
+                        .getElementsByClassName("normal-box-container")[19]
+                        .classList.contains("finished") == true &&
+                      document
+                        .getElementsByClassName("normal-box-container")[20]
+                        .classList.contains("finished") == true)
+                  ) {
+                    document.getElementById("eggpopup").style.display = "block";
+                    document.getElementById("fade").style.display = "block";
+                    document.getElementById(
+                      "surprisePoints"
+                    ).innerText = `${finalData.bonus.point}點`;
+                  }
                 }
               }
             })
@@ -223,7 +231,7 @@ function getUserIdFirst () {
               console.log(error);
             });
         });
-      localStorage.setItem('dailyQuota', finalData.quiz.quota)
+      localStorage.setItem("dailyQuota", finalData.quiz.quota);
     })
     .catch((error) => {
       console.log(error);
@@ -231,8 +239,6 @@ function getUserIdFirst () {
       return false;
     });
 }
-
-
 
 function getUserId() {
   let userNumber = document.getElementById("userNumberInput").value;
@@ -245,7 +251,7 @@ function getUserId() {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        'Authorization': 'token',
+        Authorization: "token",
       },
       body: JSON.stringify({
         // 第一次要帶
@@ -256,7 +262,12 @@ function getUserId() {
         return data.json();
       })
       .then((finalData) => {
+        if (localStorage.getItem("token") !== null) {
+          localStorage.clear();
+          document.getElementById("signtomorrow-btn").style.display = "none";
+        }
         console.log(finalData);
+        localStorage.setItem("token", finalData.token);
         localStorage.setItem("userId", finalData.id);
         alert("登入成功");
         popupClosed();
@@ -282,105 +293,110 @@ function getUserId() {
         // 登入成功後簽到按鈕
 
         document
-        .getElementById("signtoday-btn")
-        .addEventListener("click", function () {
-          fetch("https://event.setn.com/api/2022moonTest/signin", {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-              "Content-Type": "application/json",
-              'Authorization': 'token',
-            },        
-          })
-            .then((data) => {
-              return data.json();
+          .getElementById("signtoday-btn")
+          .addEventListener("click", function () {
+            fetch("https://event.setn.com/api/2022moonTest/signin", {
+              method: "POST",
+              mode: "cors",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "token",
+              },
             })
-            .then((finalData) => {
-              console.log(finalData);
-              notSigninFinished = document.getElementsByClassName(
-                "normal-box-container"
-              )[0];
-              document.getElementById("signtoday-btn").style.display = "none";
-              document.getElementById("signtomorrow-btn").style.display =
-                "block";
-
-              // 代表從第一天開始
-              if (siginFinished == undefined) {
-                notSigninFinished.classList.add("finished");
-              } else {
-                siginFinished.nextElementSibling.classList.add("finished");
-                // 如果簽到天數為三的位數 && 前面兩天都有簽到的話
-                if (
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 3" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[0]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[1]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 6" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[3]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[4]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 9" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[6]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[7]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 12" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[9]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[10]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 15" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[12]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[13]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 18" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[15]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[16]
-                      .classList.contains("finished") == true) ||
-                  (siginFinished.nextElementSibling.firstElementChild
-                    .innerText == "DAY 21" &&
-                    document
-                      .getElementsByClassName("normal-box-container")[19]
-                      .classList.contains("finished") == true &&
-                    document
-                      .getElementsByClassName("normal-box-container")[20]
-                      .classList.contains("finished") == true)
-                ) {
-                  document.getElementById("eggpopup").style.display = "block";
-                  document.getElementById("fade").style.display = "block";
-                  document.getElementById("surprisePoints").innerText =
-                    `${finalData.bouns.point}點`;
+              .then((data) => {
+                return data.json();
+              })
+              .then((finalData) => {
+                console.log(finalData);
+                notSigninFinished = document.getElementsByClassName(
+                  "normal-box-container"
+                )[0];
+                if (!finalData.signin.signed) {
+                  // 代表本日還沒簽到
+                  document.getElementById("signtomorrow-btn").style.display =
+                    "block";
+                  document.getElementById("signtoday-btn").style.display =
+                    "none";
+                  // 代表從第一天開始
+                  if (siginFinished == undefined) {
+                    notSigninFinished.classList.add("finished");
+                  } else {
+                    siginFinished.nextElementSibling.classList.add("finished");
+                    // 如果簽到天數為三的位數 && 前面兩天都有簽到的話
+                    if (
+                      (siginFinished.nextElementSibling.firstElementChild
+                        .innerText == "DAY 3" &&
+                        document
+                          .getElementsByClassName("normal-box-container")[0]
+                          .classList.contains("finished") == true &&
+                        document
+                          .getElementsByClassName("normal-box-container")[1]
+                          .classList.contains("finished") == true) ||
+                      (siginFinished.nextElementSibling.firstElementChild
+                        .innerText == "DAY 6" &&
+                        document
+                          .getElementsByClassName("normal-box-container")[3]
+                          .classList.contains("finished") == true &&
+                        document
+                          .getElementsByClassName("normal-box-container")[4]
+                          .classList.contains("finished") == true) ||
+                      (siginFinished.nextElementSibling.firstElementChild
+                        .innerText == "DAY 9" &&
+                        document
+                          .getElementsByClassName("normal-box-container")[6]
+                          .classList.contains("finished") == true &&
+                        document
+                          .getElementsByClassName("normal-box-container")[7]
+                          .classList.contains("finished") == true) ||
+                      (siginFinished.nextElementSibling.firstElementChild
+                        .innerText == "DAY 12" &&
+                        document
+                          .getElementsByClassName("normal-box-container")[9]
+                          .classList.contains("finished") == true &&
+                        document
+                          .getElementsByClassName("normal-box-container")[10]
+                          .classList.contains("finished") == true) ||
+                      (siginFinished.nextElementSibling.firstElementChild
+                        .innerText == "DAY 15" &&
+                        document
+                          .getElementsByClassName("normal-box-container")[12]
+                          .classList.contains("finished") == true &&
+                        document
+                          .getElementsByClassName("normal-box-container")[13]
+                          .classList.contains("finished") == true) ||
+                      (siginFinished.nextElementSibling.firstElementChild
+                        .innerText == "DAY 18" &&
+                        document
+                          .getElementsByClassName("normal-box-container")[15]
+                          .classList.contains("finished") == true &&
+                        document
+                          .getElementsByClassName("normal-box-container")[16]
+                          .classList.contains("finished") == true) ||
+                      (siginFinished.nextElementSibling.firstElementChild
+                        .innerText == "DAY 21" &&
+                        document
+                          .getElementsByClassName("normal-box-container")[19]
+                          .classList.contains("finished") == true &&
+                        document
+                          .getElementsByClassName("normal-box-container")[20]
+                          .classList.contains("finished") == true)
+                    ) {
+                      document.getElementById("eggpopup").style.display =
+                        "block";
+                      document.getElementById("fade").style.display = "block";
+                      document.getElementById(
+                        "surprisePoints"
+                      ).innerText = `${finalData.bonus.point}點`;
+                    }
+                  }
                 }
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        });
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          });
 
-        localStorage.setItem('dailyQuota', finalData.quiz.quota)
+        localStorage.setItem("dailyQuota", finalData.quiz.quota);
       })
       .catch((error) => {
         console.log(error);
@@ -391,42 +407,36 @@ function getUserId() {
 }
 
 function getNewsPopup() {
-
-  dailyQuota = localStorage.getItem('dailyQuota')
-  finalDailyQuota = localStorage.getItem('finalDailyQuota')
+  dailyQuota = localStorage.getItem("dailyQuota");
+  finalDailyQuota = localStorage.getItem("finalDailyQuota");
 
   // if( dailyQuota > 0 || finalDailyQuota == 2) {
-    document.getElementById("newsPopup").style.display = "block";
-    document.getElementById("fade").style.display = "block";
-    fetch("https://event.setn.com/api/2022moonTest/quiz", {
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': 'token',
-      },  
+  document.getElementById("newsPopup").style.display = "block";
+  document.getElementById("fade").style.display = "block";
+  fetch("https://event.setn.com/api/2022moonTest/quiz", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "token",
+    },
+  })
+    .then((data) => {
+      return data.json();
     })
-      .then((data) => {
-        return data.json();
-      })
-      .then((finalData) => {
-        console.log(finalData);
-        document.getElementById("question").innerText = `Q. ${finalData[0].text}`;
-        document.getElementById(
-          "answerA"
-        ).innerText = `A. ${finalData[0].options[0]}`;
-        document.getElementById(
-          "answerB"
-        ).innerText = `B. ${finalData[0].options[1]}`;
-        document
-          .getElementById("openBook")
-          .addEventListener("click", function () {
-            window.open(finalData[0].referrence);
-          });
-        localStorage.setItem("quizId", finalData[0].id);
-        localStorage.setItem("quizUrl", finalData[0].referrence);
-      })
-      .catch((error) => {
-        console.log(error);
-      });  
+    .then((finalData) => {
+      console.log(finalData);
+      document.getElementById("question").innerText = `Q. ${finalData[0].text}`;
+      document.getElementById(
+        "answerA"
+      ).innerText = `A. ${finalData[0].options[0]}`;
+      document.getElementById(
+        "answerB"
+      ).innerText = `B. ${finalData[0].options[1]}`;
+      localStorage.setItem("quizId", finalData[0].id);
+      localStorage.setItem("quizUrl", finalData[0].referrence);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   // } else if ( dailyQuota == 0 ){
   //   document.getElementById("newsPopup").style.display = "block";
   //   document.getElementById("fade").style.display = "block";
@@ -437,11 +447,14 @@ function getNewsPopup() {
   //   document.getElementById("share-exam-share").style.display = "block";
   //   document.getElementById('exambox').style.display = 'none';
   // } else if(finalDailyQuota == 0) {
-    //   document.getElementById("share-exam-over").style.display = "block";
-    //   document.getElementById('exambox').style.display = 'none';
-    // } 
+  //   document.getElementById("share-exam-over").style.display = "block";
+  //   document.getElementById('exambox').style.display = 'none';
+  // }
+}
 
-
+function getOpenBookUrl() {
+  quizUrl = localStorage.getItem("quizUrl");
+  window.open(quizUrl);
 }
 
 function getNewsAnswerA() {
@@ -452,7 +465,7 @@ function getNewsAnswerA() {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      'Authorization': 'token',
+      Authorization: "token",
     },
     body: JSON.stringify({
       id: `${quizId}`,
@@ -465,11 +478,11 @@ function getNewsAnswerA() {
     .then((finalData) => {
       console.log(finalData);
       document.getElementById("exambox").style.display = "none";
-      localStorage.setItem('finalDailyQuota', finalData.quiz.quota)
-      if ( finalData.quiz.isRight ) {
-          document.getElementById("share-exam-true").style.display = "block";
+      localStorage.setItem("finalDailyQuota", finalData.quiz.quota);
+      if (finalData.quiz.isRight) {
+        document.getElementById("share-exam-true").style.display = "block";
       } else {
-          document.getElementById("share-exam-false").style.display = "block";
+        document.getElementById("share-exam-false").style.display = "block";
       }
     });
 }
@@ -482,7 +495,7 @@ function getNewsAnswerB() {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      'Authorization': 'token',
+      Authorization: "token",
     },
     body: JSON.stringify({
       id: `${quizId}`,
@@ -514,7 +527,9 @@ function newsClickOk() {
 }
 
 function shareFaceBook() {
-  window.open("https://www.google.com");
+  window.open(
+    "https://www.facebook.com/sharer/sharer.php?u=https://event.setn.com/share/moontest2022/"
+  );
   popupClosed();
 }
 function dailyBonusGetStared() {

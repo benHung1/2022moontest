@@ -43,16 +43,20 @@ $(document).ready(function () {
 // 從這開始 從這開始 從這開始 從這開始 從這開始
 
 window.onload = function () {
-  getUserIdFirst();
-}
+  if (localStorage.getItem("token") !== null) {
+    getUserIdFirst();
+  } else {
+    console.log("有妳媽token");
+  }
+};
 
-function getUserIdFirst () {
+function getUserIdFirst() {
   fetch("https://event.setn.com/api/2022moonTest/signin", {
     method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      'Authorization': 'token',
+      Authorization: "token",
     },
     // body: JSON.stringify({
     //   id: `${userNumber}`,
@@ -64,6 +68,8 @@ function getUserIdFirst () {
     .then((finalData) => {
       console.log(finalData);
       localStorage.setItem("userId", finalData.id);
+      localStorage.setItem("token", finalData.token);
+
       popupClosed();
       document.getElementById("userLoginNumber").style.display = "none";
       document.getElementById("userLoginEventNumber").style.display = "block";
@@ -79,7 +85,6 @@ function getUserIdFirst () {
       alert("請輸入正確的活動編號");
       return false;
     });
-
 }
 
 let userId;
@@ -95,7 +100,7 @@ function getUserId() {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        'Authorization': 'token',
+        Authorization: "token",
       },
       body: JSON.stringify({
         id: `${userNumber}`,
@@ -106,6 +111,7 @@ function getUserId() {
       })
       .then((finalData) => {
         localStorage.setItem("userId", finalData.id);
+        localStorage.setItem("token", finalData.token);
         alert("登入成功");
         popupClosed();
         document.getElementById("userLoginNumber").style.display = "none";
@@ -169,10 +175,10 @@ function getUserPointResult() {
 
   let pointResult = document.getElementById("pointResult");
 
-  fetch("https://event.setn.com/api/2022moonTest/point/histories",{
+  fetch("https://event.setn.com/api/2022moonTest/point/histories", {
     headers: {
       "Content-Type": "application/json",
-      'Authorization': 'token',
+      Authorization: "token",
     },
   })
     .then((data) => {
@@ -219,9 +225,8 @@ function getUserTurnTableResult() {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      'Authorization': 'token',
+      Authorization: "token",
     },
-
   })
     .then((data) => {
       return data.json();
