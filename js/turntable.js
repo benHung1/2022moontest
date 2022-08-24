@@ -49,11 +49,7 @@ let quota;
 let startItem = "";
 
 window.onload = function () {
-  if (localStorage.getItem("token") !== null) {
-    getQuota();
-  } else {
-    console.log("有妳媽token");
-  }
+  getQuota();
 };
 
 async function getQuota() {
@@ -69,6 +65,7 @@ async function getQuota() {
     .then((finalData) => {
       console.log(finalData);
       localStorage.setItem("firstQuota", finalData.spinToWin.quota);
+      document.getElementById("count").innerText = finalData.spinToWin.quota;
     })
     .catch((error) => {
       console.log(error);
@@ -118,13 +115,13 @@ turn = 4; //轉盤最低幾圈 你想幾圈
 
 // 取出剛進頁面的扣打
 
-let firstQuota = localStorage.getItem("firstQuota");
-document.getElementById("count").innerText = firstQuota;
+let firstQuota;
 
 let finalQuota;
 
 //開始
 async function start() {
+  firstQuota = localStorage.getItem("firstQuota");
   finalQuota = localStorage.getItem("finalQuota");
 
   if (!isStatr && firstQuota > 0) {

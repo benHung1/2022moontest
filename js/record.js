@@ -50,9 +50,102 @@ window.onload = function () {
   }
 };
 
+async function getUserPointResult() {
+  document.getElementById("UserPointResult").classList.add("active");
+  document.getElementById("UserTurnTableResult").classList.remove("active");
+
+  document.getElementById("Abox").style.display = "block";
+  document.getElementById("Bbox").style.display = "none";
+  if (localStorage.getItem("userId") !== null) {
+    let pointResult = document.getElementById("pointResult");
+
+    await fetch("https://event.setn.com/api/2022moonTest/point/histories", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "token",
+      },
+    })
+      .then((data) => {
+        return data.json();
+      })
+      .then((finalData) => {
+        console.log(finalData);
+        localStorage.setItem("pointResults", JSON.stringify(finalData));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    userFinalPointResults = JSON.parse(localStorage.getItem("pointResults"));
+
+    let finalUserPoints = "";
+    userFinalPointResults.histories.map((val) => {
+      finalUserPoints += `
+          <li class="pointsbox">
+          <div class="box-left">
+            <span id="pointDate">${val.date.substring(5, 10)}</span>
+            <p id="desc">${val.description}</p>
+          </div>
+          <div class="box-right">
+            <p id="point"><strong></strong>${val.point}點</p>
+          </div>
+        </li>
+          `;
+    });
+    pointResult.innerHTML = finalUserPoints;
+  }
+}
+
+async function getUserTurnTableResult() {
+  document.getElementById("UserPointResult").classList.remove("active");
+  document.getElementById("UserTurnTableResult").classList.add("active");
+  document.getElementById("Abox").style.display = "none";
+  document.getElementById("Bbox").style.display = "block";
+  if (localStorage.getItem("userId") !== null) {
+    await fetch("https://event.setn.com/api/2022moonTest/spinToWin/histories", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "token",
+      },
+    })
+      .then((data) => {
+        return data.json();
+      })
+      .then((finalData) => {
+        console.log(finalData);
+        localStorage.setItem("turnTableResults", JSON.stringify(finalData));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    userFinalTurnTableResults = JSON.parse(
+      localStorage.getItem("turnTableResults")
+    );
+
+    let finalUserTurnTable = "";
+    userFinalTurnTableResults.histories.map((val) => {
+      finalUserTurnTable += `
+      <li class="pointsbox">
+      <div class="box-left">
+        <span>${val.date.substring(5, 10)}</span>
+        <b class="join-item">參加轉盤兌換</b>
+        <b>${val.description}</b>
+      </div>
+      <div class="box-right">
+        <p><strong>${val.point}</strong>點</p>
+      </div>
+    </li>
+  `;
+    });
+    turnTableResult.innerHTML = finalUserTurnTable;
+  }
+}
+
 function getUserIdFirst() {
   fetch("https://event.setn.com/api/2022moonTest/signin", {
-    method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
@@ -161,103 +254,4 @@ function popupClosed() {
 function getUserLogin() {
   document.getElementById("fade").style.display = "block";
   document.getElementById("popup").style.display = "block";
-}
-
-function getUserPointResult() {
-  userId = localStorage.getItem("userId");
-
-  // if (userId !== "") {
-  document.getElementById("UserPointResult").classList.add("active");
-  document.getElementById("UserTurnTableResult").classList.remove("active");
-
-  document.getElementById("Abox").style.display = "block";
-  document.getElementById("Bbox").style.display = "none";
-
-  let pointResult = document.getElementById("pointResult");
-
-  fetch("https://event.setn.com/api/2022moonTest/point/histories", {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "token",
-    },
-  })
-    .then((data) => {
-      return data.json();
-    })
-    .then((finalData) => {
-      console.log(finalData);
-      localStorage.setItem("pointResults", JSON.stringify(finalData));
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
-  userFinalPointResults = JSON.parse(localStorage.getItem("pointResults"));
-
-  let finalUserPoints = "";
-  userFinalPointResults.histories.map((val) => {
-    finalUserPoints += `
-          <li class="pointsbox">
-          <div class="box-left">
-            <span id="pointDate">${val.date.substring(5, 10)}</span>
-            <p id="desc">${val.description}</p>
-          </div>
-          <div class="box-right">
-            <p id="point"><strong></strong>${val.point}點</p>
-          </div>
-        </li>
-          `;
-  });
-  pointResult.innerHTML = finalUserPoints;
-  // }
-}
-
-function getUserTurnTableResult() {
-  userId = localStorage.getItem("userId");
-
-  // if (userId !== "") {
-  document.getElementById("UserPointResult").classList.remove("active");
-  document.getElementById("UserTurnTableResult").classList.add("active");
-  document.getElementById("Abox").style.display = "none";
-  document.getElementById("Bbox").style.display = "block";
-  fetch("https://event.setn.com/api/2022moonTest/spinToWin/histories", {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "token",
-    },
-  })
-    .then((data) => {
-      return data.json();
-    })
-    .then((finalData) => {
-      console.log(finalData);
-      localStorage.setItem("turnTableResults", JSON.stringify(finalData));
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
-  userFinalTurnTableResults = JSON.parse(
-    localStorage.getItem("turnTableResults")
-  );
-
-  let finalUserTurnTable = "";
-  userFinalTurnTableResults.histories.map((val) => {
-    finalUserTurnTable += `
-      <li class="pointsbox">
-      <div class="box-left">
-        <span>${val.date.substring(5, 10)}</span>
-        <b class="join-item">參加轉盤兌換</b>
-        <b>${val.description}</b>
-      </div>
-      <div class="box-right">
-        <p><strong>${val.point}</strong>點</p>
-      </div>
-    </li>
-  `;
-  });
-  turnTableResult.innerHTML = finalUserTurnTable;
-  // }
 }
