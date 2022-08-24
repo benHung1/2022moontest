@@ -84,11 +84,15 @@ let dailyQuota;
 
 let finalDailyQuota;
 
+let shared;
+
+let finalAnswerAndShared;
+
 window.onload = function () {
   if (localStorage.getItem("token") !== null) {
     getUserIdFirst();
   } else {
-    console.log("有妳媽token");
+    console.log("沒token");
   }
 };
 
@@ -408,7 +412,10 @@ function getUserId() {
 function getNewsPopup() {
   dailyQuota = localStorage.getItem("dailyQuota");
   finalDailyQuota = localStorage.getItem("finalDailyQuota");
+  shared = localStorage.getItem("shared");
+  finalAnswerAndShared = localStorage.getItem("finalAnswerAndShared");
 
+  // 每日扣打 > 2 || 答題完後的扣打
   // if (dailyQuota > 0 || finalDailyQuota == 2) {
   document.getElementById("newsPopup").style.display = "block";
   document.getElementById("fade").style.display = "block";
@@ -437,23 +444,44 @@ function getNewsPopup() {
       console.log(error);
     });
   // }
+
+  // 每日扣打 = 0
   //  else if (dailyQuota == 0) {
   //   document.getElementById("newsPopup").style.display = "block";
   //   document.getElementById("fade").style.display = "block";
   //   document.getElementById("share-exam-false").style.display = "none";
   //   document.getElementById("exambox").style.display = "none";
   //   document.getElementById("share-exam-over").style.display = "block";
-  // } else if (finalDailyQuota == 1) {
-  //   document.getElementById("fade").style.display = "block";
-  //   document.getElementById("newsPopup").style.display = "block";
-  //   document.getElementById("share-exam-share").style.display = "block";
-  //   document.getElementById("exambox").style.display = "none";
-  // } else if (finalDailyQuota == 0) {
-  //   document.getElementById("fade").style.display = "block";
-  //   document.getElementById("newsPopup").style.display = "block";
-  //   document.getElementById("share-exam-over").style.display = "block";
-  //   document.getElementById("exambox").style.display = "none";
   // }
+
+  // 已經分享並且答對兩次
+
+  if (finalAnswerAndShared && shared == "true") {
+    document.getElementById("fade").style.display = "block";
+    document.getElementById("newsPopup").style.display = "block";
+    document.getElementById("share-exam-over").style.display = "block";
+    document.getElementById("exambox").style.display = "none";
+  }
+  // 已經分享
+  else if (shared == "true") {
+    document.getElementById("share-exam-share").display = "none";
+    document.getElementById("fade").style.display = "block";
+    document.getElementById("exambox").style.display = "block";
+  }
+  // 答對一次後
+  else if (finalDailyQuota == 1) {
+    document.getElementById("fade").style.display = "block";
+    document.getElementById("newsPopup").style.display = "block";
+    document.getElementById("share-exam-share").style.display = "block";
+    document.getElementById("exambox").style.display = "none";
+  }
+  // 最終答題次數 = 0
+  else if (finalDailyQuota == 0) {
+    document.getElementById("fade").style.display = "block";
+    document.getElementById("newsPopup").style.display = "block";
+    document.getElementById("share-exam-over").style.display = "block";
+    document.getElementById("exambox").style.display = "none";
+  }
 }
 
 function getOpenBookUrl() {
@@ -483,6 +511,8 @@ function getNewsAnswerA() {
       console.log(finalData);
       document.getElementById("exambox").style.display = "none";
       localStorage.setItem("finalDailyQuota", finalData.quiz.quota);
+      localStorage.setItem("finalAnswerAndShared", finalData.quiz.isRight);
+
       if (finalData.quiz.isRight) {
         document.getElementById("share-exam-true").style.display = "block";
         document.getElementById(
@@ -515,6 +545,9 @@ function getNewsAnswerB() {
     .then((finalData) => {
       console.log(finalData);
       document.getElementById("exambox").style.display = "none";
+      localStorage.setItem("finalDailyQuota", finalData.quiz.quota);
+      localStorage.setItem("finalAnswerAndShared", finalData.quiz.isRight);
+
       if (finalData.quiz.isRight) {
         document.getElementById("share-exam-true").style.display = "block";
         document.getElementById(
@@ -541,6 +574,28 @@ function shareFaceBook() {
     "https://www.facebook.com/sharer/sharer.php?u=https://event.setn.com/share/moontest2022/"
   );
   popupClosed();
+  fetch("https://event.setn.com/api/2022moonTest/share/FB", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "token",
+    },
+  })
+    .then((data) => {
+      return data.json();
+    })
+    .then((finalData) => {
+      console.log(finalData);
+
+      localStorage.setItem("shared", finalData.quiz.shared);
+      localStorage.removeItem("finalAnswerAndShared");
+
+      popupClosed();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 function dailyBonusGetStared() {
   userId = localStorage.getItem("userId");

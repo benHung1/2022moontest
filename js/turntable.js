@@ -32,10 +32,6 @@ var app = {
 };
 
 $(document).ready(function () {
-  // if (document.location.protocol == "http:") {
-  //     window.location.replace(window.location.href.replace("http:", "https:"));
-  // }
-
   vm = new Vue(app);
 });
 
@@ -49,8 +45,47 @@ let quota;
 let startItem = "";
 
 window.onload = function () {
-  getQuota();
+  if (localStorage.getItem("token") !== null) {
+    getQuota();
+  } else {
+    console.log("沒token");
+  }
 };
+
+async function getUserId() {
+  let userNumber = document.getElementById("userNumberInput").value;
+  if (!userNumber) {
+    alert("請不要空白");
+    return false;
+  } else {
+    await fetch("https://event.setn.com/api/2022moonTest/signin", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "token",
+      },
+      body: JSON.stringify({
+        id: `${userNumber}`,
+      }),
+    })
+      .then((data) => {
+        return data.json();
+      })
+      .then((finalData) => {
+        localStorage.setItem("userId", finalData.id);
+        localStorage.setItem("token", finalData.token);
+        alert("登入成功");
+        popupClosed();
+        getQuota();
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("請輸入正確的活動編號");
+        return false;
+      });
+  }
+}
 
 async function getQuota() {
   await fetch("https://event.setn.com/api/2022moonTest/spinToWin", {
@@ -133,6 +168,9 @@ async function start() {
     } else {
       return false;
     }
+  } else if (localStorage.getItem("token") == null) {
+    document.getElementById("popup").style.display = "block";
+    document.getElementById("fade").style.display = "block";
   } else if (firstQuota == 0 && !isStatr) {
     alert("剩餘次數不足喔");
   }
@@ -160,6 +198,13 @@ function operation(ran) {
   }
 }
 
+// 會員編號彈窗
+
+function memberNumber() {
+  document.getElementById("iphonepage").style.display = "block";
+  document.getElementById("popup").style.display = "none";
+}
+
 // 注意事項彈窗
 
 function popupOpen() {
@@ -173,4 +218,6 @@ function popupOpen() {
 function popupClosed() {
   document.getElementById("noticepage").style.display = "none";
   document.getElementById("fade").style.display = "none";
+  document.getElementById("popup").style.display = "none";
+  document.getElementById("iphonepage").style.display = "none";
 }

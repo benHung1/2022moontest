@@ -46,7 +46,7 @@ window.onload = function () {
   if (localStorage.getItem("token") !== null) {
     getUserIdFirst();
   } else {
-    console.log("有妳媽token");
+    console.log("沒token");
   }
 };
 
