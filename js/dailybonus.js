@@ -165,6 +165,7 @@ function getUserIdFirst() {
             })
             .then((finalData) => {
               console.log(finalData);
+              document.getElementById('userLoginPointValue').innerText = finalData.point
               notSigninFinished = document.getElementsByClassName(
                 "normal-box-container"
               )[0];
@@ -287,6 +288,8 @@ function getUserId() {
         console.log(finalData);
 
         // 簽到完後存入 正確最新的點數
+
+        localStorage.clear();
 
         localStorage.setItem("signed", finalData.signin.signed);
         localStorage.setItem("token", finalData.token);
@@ -444,9 +447,12 @@ function getNewsPopup() {
   finalAnswerAndShared = localStorage.getItem("finalAnswerAndShared");
 
   // 每日扣打 > 2 || 答題完後的扣打
-  // if (dailyQuota > 0 || finalDailyQuota == 2) {
+  if (dailyQuota > 0 ) {
   document.getElementById("newsPopup").style.display = "block";
   document.getElementById("fade").style.display = "block";
+  document.getElementById("exambox").style.display = "block";
+  document.getElementById("share-exam-over").style.display = "none";
+
   fetch("https://event.setn.com/api/2022moonTest/quiz", {
     headers: {
       "Content-Type": "application/json",
@@ -471,16 +477,16 @@ function getNewsPopup() {
     .catch((error) => {
       console.log(error);
     });
-  // }
+  }
 
   // 每日扣打 = 0
-  //  else if (dailyQuota == 0) {
-  //   document.getElementById("newsPopup").style.display = "block";
-  //   document.getElementById("fade").style.display = "block";
-  //   document.getElementById("share-exam-false").style.display = "none";
-  //   document.getElementById("exambox").style.display = "none";
-  //   document.getElementById("share-exam-over").style.display = "block";
-  // }
+   else if (dailyQuota == 0) {
+    document.getElementById("newsPopup").style.display = "block";
+    document.getElementById("fade").style.display = "block";
+    document.getElementById("share-exam-false").style.display = "none";
+    document.getElementById("exambox").style.display = "none";
+    document.getElementById("share-exam-over").style.display = "block";
+  }
 
   // 已經分享並且答對兩次
 
@@ -543,9 +549,11 @@ function getNewsAnswerA() {
 
       if (finalData.quiz.isRight) {
         document.getElementById("share-exam-true").style.display = "block";
-        document.getElementById(
-          "tureAnswer"
-        ).innerText = `獎勵+${finalData.point}點`;
+        // document.getElementById(
+        //   "tureAnswer"
+        // ).innerText = `獎勵+${finalData.point}點`;
+        // document.getElementById('userLoginPointValue').innerText = `目前點數${userPoint + finalData.point}點`
+
       } else {
         document.getElementById("share-exam-false").style.display = "block";
       }
@@ -578,9 +586,10 @@ function getNewsAnswerB() {
 
       if (finalData.quiz.isRight) {
         document.getElementById("share-exam-true").style.display = "block";
-        document.getElementById(
-          "tureAnswer"
-        ).innerText = `獎勵+${finalData.point}點`;
+        // document.getElementById(
+        //   "tureAnswer"
+        // ).innerText = `獎勵+${finalData.point}點`;
+        // document.getElementById('userLoginPointValue').innerText = `目前點數${userPoint + finalData.point}點`
       } else {
         document.getElementById("share-exam-false").style.display = "block";
       }

@@ -42,6 +42,8 @@ $(document).ready(function () {
 
 // 從這開始 從這開始 從這開始 從這開始 從這開始
 
+
+
 window.onload = function () {
   if (localStorage.getItem("token") !== null) {
     getUserIdFirst();
@@ -50,20 +52,34 @@ window.onload = function () {
   }
 };
 
+let userNumber;
+
+let userPoint;
+
+let userToken;
+
+let signed;
+
+let userId;
+
+
 async function getUserPointResult() {
   document.getElementById("UserPointResult").classList.add("active");
   document.getElementById("UserTurnTableResult").classList.remove("active");
 
   document.getElementById("Abox").style.display = "block";
   document.getElementById("Bbox").style.display = "none";
-  if (localStorage.getItem("userId") !== null) {
+
+  userToken = localStorage.getItem('token');
+
+  if (localStorage.getItem("token") !== null) {
     let pointResult = document.getElementById("pointResult");
 
     await fetch("https://event.setn.com/api/2022moonTest/point/histories", {
       headers: {
         "Content-Type": "application/json",
-        Authorization: "token",
-      },
+        Authorization: `${userToken}`
+            },
     })
       .then((data) => {
         return data.json();
@@ -101,14 +117,17 @@ async function getUserTurnTableResult() {
   document.getElementById("UserTurnTableResult").classList.add("active");
   document.getElementById("Abox").style.display = "none";
   document.getElementById("Bbox").style.display = "block";
-  if (localStorage.getItem("userId") !== null) {
+
+  userToken = localStorage.getItem('token');
+
+  if (localStorage.getItem("token") !== null) {
     await fetch("https://event.setn.com/api/2022moonTest/spinToWin/histories", {
       method: "POST",
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "token",
-      },
+        Authorization: `${userToken}`
+            },
     })
       .then((data) => {
         return data.json();
@@ -145,32 +164,32 @@ async function getUserTurnTableResult() {
 }
 
 function getUserIdFirst() {
+
+  signed = localStorage.getItem("signed");
+  userNumber = localStorage.getItem("userId");
+  userToken = localStorage.getItem("token");
+  userPoint = localStorage.getItem("point");
+
   fetch("https://event.setn.com/api/2022moonTest/signin", {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "token",
+      Authorization: `${userToken}`,
     },
-    // body: JSON.stringify({
-    //   id: `${userNumber}`,
-    // }),
   })
     .then((data) => {
       return data.json();
     })
     .then((finalData) => {
       console.log(finalData);
-      localStorage.setItem("userId", finalData.id);
-      localStorage.setItem("token", finalData.token);
 
       popupClosed();
       document.getElementById("userLoginNumber").style.display = "none";
       document.getElementById("userLoginEventNumber").style.display = "block";
       document.getElementById("userLoginPoint").style.display = "block";
       document.getElementById("userLoginEventNumberValue").innerText =
-        finalData.id;
-      document.getElementById("userLoginPointValue").innerText =
-        finalData.point;
+        userNumber;
+      document.getElementById("userLoginPointValue").innerText = userPoint;
       getUserPointResult();
     })
     .catch((error) => {
@@ -180,7 +199,6 @@ function getUserIdFirst() {
     });
 }
 
-let userId;
 
 function getUserId() {
   let userNumber = document.getElementById("userNumberInput").value;
@@ -193,7 +211,7 @@ function getUserId() {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "token",
+        Authorization: `${userToken}`,
       },
       body: JSON.stringify({
         id: `${userNumber}`,
@@ -203,8 +221,10 @@ function getUserId() {
         return data.json();
       })
       .then((finalData) => {
-        localStorage.setItem("userId", finalData.id);
+        localStorage.setItem("signed", finalData.signin.signed);
         localStorage.setItem("token", finalData.token);
+        localStorage.setItem("userId", finalData.id);
+        localStorage.setItem("point", finalData.point);
         alert("登入成功");
         popupClosed();
         document.getElementById("userLoginNumber").style.display = "none";

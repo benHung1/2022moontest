@@ -44,6 +44,17 @@ let finalPrize;
 let quota;
 let startItem = "";
 
+let userNumber;
+
+let userPoint;
+
+let userToken;
+
+let signed;
+
+let userId;
+
+
 window.onload = function () {
   if (localStorage.getItem("token") !== null) {
     getQuota();
@@ -63,7 +74,7 @@ async function getUserId() {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "token",
+        Authorization: `${userToken}`
       },
       body: JSON.stringify({
         id: `${userNumber}`,
@@ -73,8 +84,10 @@ async function getUserId() {
         return data.json();
       })
       .then((finalData) => {
-        localStorage.setItem("userId", finalData.id);
+        localStorage.setItem("signed", finalData.signin.signed);
         localStorage.setItem("token", finalData.token);
+        localStorage.setItem("userId", finalData.id);
+        localStorage.setItem("point", finalData.point);
         alert("登入成功");
         popupClosed();
         getQuota();
@@ -88,10 +101,16 @@ async function getUserId() {
 }
 
 async function getQuota() {
+
+  signed = localStorage.getItem("signed");
+  userNumber = localStorage.getItem("userId");
+  userToken = localStorage.getItem("token");
+  userPoint = localStorage.getItem("point");
+
   await fetch("https://event.setn.com/api/2022moonTest/spinToWin", {
     headers: {
       "Content-Type": "application/json",
-      Authorization: "token",
+      Authorization: `${userToken}`
     },
   })
     .then((data) => {
@@ -113,7 +132,7 @@ async function getfinalPrize() {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "token",
+      Authorization: `${userToken}`
     },
   })
     .then((data) => {
@@ -159,6 +178,8 @@ async function start() {
   firstQuota = localStorage.getItem("firstQuota");
   finalQuota = localStorage.getItem("finalQuota");
 
+  console.log('??');
+
   if (!isStatr && firstQuota > 0) {
     isStatr = true;
     await this.getfinalPrize();
@@ -184,7 +205,7 @@ function operation(ran) {
   if (Prize >= totalNum) {
     Prize = 0;
   }
-  if (finalQuota > 0) {
+  if (firstQuota > 0) {
     wheel.style.transform = "rotate(" + (lenCloc * sun - Prize * 45) + "deg)";
     setTimeout(
       function () {
