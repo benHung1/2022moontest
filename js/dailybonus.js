@@ -88,6 +88,14 @@ let shared;
 
 let finalAnswerAndShared;
 
+let userNumber;
+
+let userPoint;
+
+let userToken;
+
+let signed;
+
 window.onload = function () {
   if (localStorage.getItem("token") !== null) {
     getUserIdFirst();
@@ -97,11 +105,16 @@ window.onload = function () {
 };
 
 function getUserIdFirst() {
+  signed = localStorage.getItem("signed");
+  userNumber = localStorage.getItem("userId");
+  userToken = localStorage.getItem("token");
+  userPoint = localStorage.getItem("point");
+
   fetch("https://event.setn.com/api/2022moonTest/signin", {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "token",
+      Authorization: `${userToken}`,
     },
   })
     .then((data) => {
@@ -109,17 +122,14 @@ function getUserIdFirst() {
     })
     .then((finalData) => {
       console.log(finalData);
-      localStorage.setItem("userId", finalData.id);
-      localStorage.setItem("token", finalData.token);
 
       popupClosed();
       document.getElementById("userLoginNumber").style.display = "none";
       document.getElementById("userLoginEventNumber").style.display = "block";
       document.getElementById("userLoginPoint").style.display = "block";
       document.getElementById("userLoginEventNumberValue").innerText =
-        finalData.id;
-      document.getElementById("userLoginPointValue").innerText =
-        finalData.point;
+        userNumber;
+      document.getElementById("userLoginPointValue").innerText = userPoint;
       dailyBonusGetStared();
       for (let i = 0; i < finalData.signin.histories.length; i++) {
         // console.log(finalData.signin.histories[i]);
@@ -129,9 +139,14 @@ function getUserIdFirst() {
             .getElementsByClassName("normal-box-container")
             [i].classList.add("finished");
           siginFinished = document.getElementsByClassName("finished")[i];
-          // console.log(siginFinished.classList.contains("finished") == true);
         }
       }
+
+      if (signed == "true") {
+        document.getElementById("signtomorrow-btn").style.display = "block";
+        document.getElementById("signtoday-btn").style.display = "none";
+      }
+
       // 登入成功後簽到按鈕
 
       document
@@ -142,7 +157,7 @@ function getUserIdFirst() {
             mode: "cors",
             headers: {
               "Content-Type": "application/json",
-              Authorization: "token",
+              Authorization: `${userToken}`,
             },
           })
             .then((data) => {
@@ -153,7 +168,7 @@ function getUserIdFirst() {
               notSigninFinished = document.getElementsByClassName(
                 "normal-box-container"
               )[0];
-              if (!finalData.signin.signed) {
+              if (signed == "false") {
                 // 代表本日還沒簽到
                 document.getElementById("signtomorrow-btn").style.display =
                   "block";
@@ -255,7 +270,7 @@ function getUserId() {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "token",
+        Authorization: `${userToken}`,
       },
       body: JSON.stringify({
         // 第一次要帶
@@ -270,10 +285,16 @@ function getUserId() {
           document.getElementById("signtomorrow-btn").style.display = "none";
         }
         console.log(finalData);
+
+        // 簽到完後存入 正確最新的點數
+
+        localStorage.setItem("signed", finalData.signin.signed);
         localStorage.setItem("token", finalData.token);
         localStorage.setItem("userId", finalData.id);
+        localStorage.setItem("point", finalData.point);
         alert("登入成功");
         popupClosed();
+        location.reload();
         document.getElementById("userLoginNumber").style.display = "none";
         document.getElementById("userLoginEventNumber").style.display = "block";
         document.getElementById("userLoginPoint").style.display = "block";
@@ -293,17 +314,24 @@ function getUserId() {
             // console.log(siginFinished.classList.contains("finished") == true);
           }
         }
+
+        if (signed == "true") {
+          document.getElementById("signtomorrow-btn").style.display = "block";
+          document.getElementById("signtoday-btn").style.display = "none";
+        }
+
         // 登入成功後簽到按鈕
 
         document
           .getElementById("signtoday-btn")
           .addEventListener("click", function () {
+            userToken = localStorage.getItem("token");
             fetch("https://event.setn.com/api/2022moonTest/signin", {
               method: "POST",
               mode: "cors",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: "token",
+                Authorization: `${userToken}`,
               },
             })
               .then((data) => {
@@ -314,7 +342,7 @@ function getUserId() {
                 notSigninFinished = document.getElementsByClassName(
                   "normal-box-container"
                 )[0];
-                if (!finalData.signin.signed) {
+                if (signed == "false") {
                   // 代表本日還沒簽到
                   document.getElementById("signtomorrow-btn").style.display =
                     "block";
@@ -422,7 +450,7 @@ function getNewsPopup() {
   fetch("https://event.setn.com/api/2022moonTest/quiz", {
     headers: {
       "Content-Type": "application/json",
-      Authorization: "token",
+      Authorization: `${userToken}`,
     },
   })
     .then((data) => {
@@ -497,7 +525,7 @@ function getNewsAnswerA() {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "token",
+      Authorization: `${userToken}`,
     },
     body: JSON.stringify({
       id: `${quizId}`,
@@ -532,7 +560,7 @@ function getNewsAnswerB() {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "token",
+      Authorization: `${userToken}`,
     },
     body: JSON.stringify({
       id: `${quizId}`,
@@ -579,7 +607,7 @@ function shareFaceBook() {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "token",
+      Authorization: `${userToken}`,
     },
   })
     .then((data) => {
@@ -636,6 +664,7 @@ function popupClosed() {
   document.getElementById("exambox").style.display = "block";
   document.getElementById("share-exam-true").style.display = "none";
   document.getElementById("share-exam-share").style.display = "none";
+  document.getElementById("share-exam-false").style.display = "none";
 }
 
 // 登入活動編號 彈窗
