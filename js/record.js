@@ -62,6 +62,9 @@ let signed;
 
 let userId;
 
+let userFinalPointResults;
+
+let userFinalTurnTableResults;
 
 async function getUserPointResult() {
   document.getElementById("UserPointResult").classList.add("active");
@@ -95,11 +98,12 @@ async function getUserPointResult() {
     userFinalPointResults = JSON.parse(localStorage.getItem("pointResults"));
 
     let finalUserPoints = "";
+    
     userFinalPointResults.histories.map((val) => {
       finalUserPoints += `
           <li class="pointsbox">
           <div class="box-left">
-            <span id="pointDate">${val.date.substring(5, 10)}</span>
+            <span id="pointDate">${val.date}</span>
             <p id="desc">${val.description}</p>
           </div>
           <div class="box-right">
@@ -122,7 +126,6 @@ async function getUserTurnTableResult() {
 
   if (localStorage.getItem("token") !== null) {
     await fetch("https://event.setn.com/api/2022moonTest/spinToWin/histories", {
-      method: "POST",
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
@@ -139,27 +142,25 @@ async function getUserTurnTableResult() {
       .catch((error) => {
         console.log(error);
       });
-
-    userFinalTurnTableResults = JSON.parse(
-      localStorage.getItem("turnTableResults")
-    );
-
-    let finalUserTurnTable = "";
-    userFinalTurnTableResults.histories.map((val) => {
-      finalUserTurnTable += `
-      <li class="pointsbox">
-      <div class="box-left">
-        <span>${val.date.substring(5, 10)}</span>
-        <b class="join-item">參加轉盤兌換</b>
-        <b>${val.description}</b>
-      </div>
-      <div class="box-right">
-        <p><strong>${val.point}</strong>點</p>
-      </div>
-    </li>
-  `;
-    });
-    turnTableResult.innerHTML = finalUserTurnTable;
+      userFinalTurnTableResults = JSON.parse(
+        localStorage.getItem("turnTableResults")
+      );
+      let finalUserTurnTable = "";
+      userFinalTurnTableResults.histories.map((val) => {
+        finalUserTurnTable += `
+        <li class="pointsbox">
+        <div class="box-left">
+          <span>${val.date}</span>
+          <b class="join-item">參加轉盤兌換</b>
+          <b>${val.description}</b>
+        </div>
+        <div class="box-right">
+          <p><strong>${val.point}</strong>點</p>
+        </div>
+      </li>
+    `;
+      });
+      turnTableResult.innerHTML = finalUserTurnTable;  
   }
 }
 
@@ -221,6 +222,8 @@ function getUserId() {
         return data.json();
       })
       .then((finalData) => {
+
+
         localStorage.setItem("signed", finalData.signin.signed);
         localStorage.setItem("token", finalData.token);
         localStorage.setItem("userId", finalData.id);

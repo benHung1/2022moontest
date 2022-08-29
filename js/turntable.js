@@ -84,6 +84,8 @@ async function getUserId() {
         return data.json();
       })
       .then((finalData) => {
+
+
         localStorage.setItem("signed", finalData.signin.signed);
         localStorage.setItem("token", finalData.token);
         localStorage.setItem("userId", finalData.id);
@@ -143,6 +145,8 @@ async function getfinalPrize() {
 
       finalPrize = finalData.spinToWin.win.name;
       localStorage.setItem("finalQuota", finalData.spinToWin.quota);
+        // 取出轉完的扣打
+        document.getElementById("count").innerText = finalData.spinToWin.quota;
 
       startItem = finalPrize;
     })
@@ -178,8 +182,6 @@ async function start() {
   firstQuota = localStorage.getItem("firstQuota");
   finalQuota = localStorage.getItem("finalQuota");
 
-  console.log('??');
-
   if (!isStatr && firstQuota > 0) {
     isStatr = true;
     await this.getfinalPrize();
@@ -209,10 +211,8 @@ function operation(ran) {
     wheel.style.transform = "rotate(" + (lenCloc * sun - Prize * 45) + "deg)";
     setTimeout(
       function () {
-        alert(PrizeSon[Prize]); //傳什麼給你什麼
+        alert('恭喜您中獎' + PrizeSon[Prize]); //傳什麼給你什麼
         isStatr = false;
-        // 取出轉完的扣打
-        document.getElementById("count").innerText = finalQuota;
       }.bind(this),
       3000
     );

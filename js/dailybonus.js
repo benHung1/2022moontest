@@ -129,7 +129,7 @@ function getUserIdFirst() {
       document.getElementById("userLoginPoint").style.display = "block";
       document.getElementById("userLoginEventNumberValue").innerText =
         userNumber;
-      document.getElementById("userLoginPointValue").innerText = userPoint;
+      document.getElementById("userLoginPointValue").innerText = finalData.point;
       dailyBonusGetStared();
       for (let i = 0; i < finalData.signin.histories.length; i++) {
         // console.log(finalData.signin.histories[i]);
