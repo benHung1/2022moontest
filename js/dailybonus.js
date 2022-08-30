@@ -244,7 +244,9 @@ function getUserIdFirst() {
                     document.getElementById("fade").style.display = "block";
                     document.getElementById(
                       "surprisePoints"
-                    ).innerText = `${finalData.bonus.point}點`;
+                    ).innerText = `5點`;
+                    document.getElementById("userLoginPointValue").innerText =
+                    finalData.bonus.point;            
                   }
                 }
               }
@@ -422,8 +424,10 @@ function getUserId() {
                       document.getElementById("fade").style.display = "block";
                       document.getElementById(
                         "surprisePoints"
-                      ).innerText = `${finalData.bonus.point}點`;
-                    }
+                      ).innerText = `5點`;
+                      document.getElementById("userLoginPointValue").innerText =
+                      finalData.bonus.point;            
+                      }
                   }
                 }
               })

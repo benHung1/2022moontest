@@ -189,7 +189,10 @@ async function start() {
   firstQuota = localStorage.getItem("firstQuota");
   finalQuota = localStorage.getItem("finalQuota");
 
-  if (!getUserToken() ) return;
+  if (!getUserToken() ) {
+    document.getElementById("popup").style.display = "block";
+    document.getElementById("fade").style.display = "block";
+  };
 
   if (finalQuota === '0' && !isStatr) {
     alert('剩餘次數不足囉');
@@ -214,9 +217,6 @@ async function start() {
       // console.log("startItem" + startItem);
       // console.log("random" + random);
     }
-  } else if (localStorage.getItem("token") == null) {
-    document.getElementById("popup").style.display = "block";
-    document.getElementById("fade").style.display = "block";
   } 
 }
 
