@@ -54,7 +54,6 @@ let signed;
 
 let userId;
 
-
 window.onload = function () {
   if (localStorage.getItem("token") !== null) {
     getQuota();
@@ -74,7 +73,7 @@ async function getUserId() {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${userToken}`
+        Authorization: `${userToken}`,
       },
       body: JSON.stringify({
         id: `${userNumber}`,
@@ -84,8 +83,6 @@ async function getUserId() {
         return data.json();
       })
       .then((finalData) => {
-
-
         localStorage.setItem("signed", finalData.signin.signed);
         localStorage.setItem("token", finalData.token);
         localStorage.setItem("userId", finalData.id);
@@ -103,7 +100,6 @@ async function getUserId() {
 }
 
 async function getQuota() {
-
   signed = localStorage.getItem("signed");
   userNumber = localStorage.getItem("userId");
   userToken = localStorage.getItem("token");
@@ -112,7 +108,7 @@ async function getQuota() {
   await fetch("https://event.setn.com/api/2022moonTest/spinToWin", {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `${userToken}`
+      Authorization: `${userToken}`,
     },
   })
     .then((data) => {
@@ -134,7 +130,7 @@ async function getfinalPrize() {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `${userToken}`
+      Authorization: `${userToken}`,
     },
   })
     .then((data) => {
@@ -145,8 +141,8 @@ async function getfinalPrize() {
 
       finalPrize = finalData.spinToWin.win.name;
       localStorage.setItem("finalQuota", finalData.spinToWin.quota);
-        // 取出轉完的扣打
-        document.getElementById("count").innerText = finalData.spinToWin.quota;
+      // 取出轉完的扣打
+      document.getElementById("count").innerText = finalData.spinToWin.quota;
 
       startItem = finalPrize;
     })
@@ -196,6 +192,9 @@ async function start() {
     document.getElementById("fade").style.display = "block";
   } else if (firstQuota == 0 && !isStatr) {
     alert("剩餘次數不足喔");
+  } else {
+    alert("剩餘次數不足喔");
+    return false;
   }
 }
 
@@ -211,7 +210,7 @@ function operation(ran) {
     wheel.style.transform = "rotate(" + (lenCloc * sun - Prize * 45) + "deg)";
     setTimeout(
       function () {
-        alert('恭喜您中獎' + PrizeSon[Prize]); //傳什麼給你什麼
+        alert("恭喜您中獎" + PrizeSon[Prize]); //傳什麼給你什麼
         isStatr = false;
       }.bind(this),
       3000

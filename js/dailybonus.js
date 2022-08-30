@@ -129,7 +129,8 @@ function getUserIdFirst() {
       document.getElementById("userLoginPoint").style.display = "block";
       document.getElementById("userLoginEventNumberValue").innerText =
         userNumber;
-      document.getElementById("userLoginPointValue").innerText = finalData.point;
+      document.getElementById("userLoginPointValue").innerText =
+        finalData.point;
       dailyBonusGetStared();
       for (let i = 0; i < finalData.signin.histories.length; i++) {
         // console.log(finalData.signin.histories[i]);
@@ -142,7 +143,7 @@ function getUserIdFirst() {
         }
       }
 
-      if (signed == "true") {
+      if (finalData.signin.signed) {
         document.getElementById("signtomorrow-btn").style.display = "block";
         document.getElementById("signtoday-btn").style.display = "none";
       }
@@ -165,7 +166,8 @@ function getUserIdFirst() {
             })
             .then((finalData) => {
               console.log(finalData);
-              document.getElementById('userLoginPointValue').innerText = finalData.point
+              document.getElementById("userLoginPointValue").innerText =
+                finalData.point;
               notSigninFinished = document.getElementsByClassName(
                 "normal-box-container"
               )[0];
@@ -447,40 +449,42 @@ function getNewsPopup() {
   finalAnswerAndShared = localStorage.getItem("finalAnswerAndShared");
 
   // 每日扣打 > 2 || 答題完後的扣打
-  if (dailyQuota > 0 ) {
-  document.getElementById("newsPopup").style.display = "block";
-  document.getElementById("fade").style.display = "block";
-  document.getElementById("exambox").style.display = "block";
-  document.getElementById("share-exam-over").style.display = "none";
+  if (dailyQuota > 0) {
+    document.getElementById("newsPopup").style.display = "block";
+    document.getElementById("fade").style.display = "block";
+    document.getElementById("exambox").style.display = "block";
+    document.getElementById("share-exam-over").style.display = "none";
 
-  fetch("https://event.setn.com/api/2022moonTest/quiz", {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `${userToken}`,
-    },
-  })
-    .then((data) => {
-      return data.json();
+    fetch("https://event.setn.com/api/2022moonTest/quiz", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${userToken}`,
+      },
     })
-    .then((finalData) => {
-      console.log(finalData);
-      document.getElementById("question").innerText = `Q. ${finalData[0].text}`;
-      document.getElementById(
-        "answerA"
-      ).innerText = `A. ${finalData[0].options[0]}`;
-      document.getElementById(
-        "answerB"
-      ).innerText = `B. ${finalData[0].options[1]}`;
-      localStorage.setItem("quizId", finalData[0].id);
-      localStorage.setItem("quizUrl", finalData[0].referrence);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then((data) => {
+        return data.json();
+      })
+      .then((finalData) => {
+        console.log(finalData);
+        document.getElementById(
+          "question"
+        ).innerText = `Q. ${finalData[0].text}`;
+        document.getElementById(
+          "answerA"
+        ).innerText = `A. ${finalData[0].options[0]}`;
+        document.getElementById(
+          "answerB"
+        ).innerText = `B. ${finalData[0].options[1]}`;
+        localStorage.setItem("quizId", finalData[0].id);
+        localStorage.setItem("quizUrl", finalData[0].referrence);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   // 每日扣打 = 0
-   else if (dailyQuota == 0) {
+  else if (dailyQuota == 0) {
     document.getElementById("newsPopup").style.display = "block";
     document.getElementById("fade").style.display = "block";
     document.getElementById("share-exam-false").style.display = "none";
@@ -549,11 +553,10 @@ function getNewsAnswerA() {
 
       if (finalData.quiz.isRight) {
         document.getElementById("share-exam-true").style.display = "block";
-        // document.getElementById(
-        //   "tureAnswer"
-        // ).innerText = `獎勵+${finalData.point}點`;
-        // document.getElementById('userLoginPointValue').innerText = `目前點數${userPoint + finalData.point}點`
 
+        document.getElementById(
+          "userLoginPointValue"
+        ).innerText = `${finalData.point}`;
       } else {
         document.getElementById("share-exam-false").style.display = "block";
       }
@@ -586,10 +589,9 @@ function getNewsAnswerB() {
 
       if (finalData.quiz.isRight) {
         document.getElementById("share-exam-true").style.display = "block";
-        // document.getElementById(
-        //   "tureAnswer"
-        // ).innerText = `獎勵+${finalData.point}點`;
-        // document.getElementById('userLoginPointValue').innerText = `目前點數${userPoint + finalData.point}點`
+        document.getElementById(
+          "userLoginPointValue"
+        ).innerText = `${finalData.point}`;
       } else {
         document.getElementById("share-exam-false").style.display = "block";
       }
@@ -608,7 +610,7 @@ function newsClickOk() {
 
 function shareFaceBook() {
   window.open(
-    "https://www.facebook.com/sharer/sharer.php?u=https://event.setn.com/share/moontest2022/"
+    "https://www.facebook.com/sharer/sharer.php?u=https://acts.setn.com/event/2022moontest/"
   );
   popupClosed();
   fetch("https://event.setn.com/api/2022moonTest/share/FB", {

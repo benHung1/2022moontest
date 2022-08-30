@@ -42,8 +42,6 @@ $(document).ready(function () {
 
 // 從這開始 從這開始 從這開始 從這開始 從這開始
 
-
-
 window.onload = function () {
   if (localStorage.getItem("token") !== null) {
     getUserIdFirst();
@@ -73,7 +71,7 @@ async function getUserPointResult() {
   document.getElementById("Abox").style.display = "block";
   document.getElementById("Bbox").style.display = "none";
 
-  userToken = localStorage.getItem('token');
+  userToken = localStorage.getItem("token");
 
   if (localStorage.getItem("token") !== null) {
     let pointResult = document.getElementById("pointResult");
@@ -81,8 +79,8 @@ async function getUserPointResult() {
     await fetch("https://event.setn.com/api/2022moonTest/point/histories", {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${userToken}`
-            },
+        Authorization: `${userToken}`,
+      },
     })
       .then((data) => {
         return data.json();
@@ -98,7 +96,7 @@ async function getUserPointResult() {
     userFinalPointResults = JSON.parse(localStorage.getItem("pointResults"));
 
     let finalUserPoints = "";
-    
+
     userFinalPointResults.histories.map((val) => {
       finalUserPoints += `
           <li class="pointsbox">
@@ -122,15 +120,15 @@ async function getUserTurnTableResult() {
   document.getElementById("Abox").style.display = "none";
   document.getElementById("Bbox").style.display = "block";
 
-  userToken = localStorage.getItem('token');
+  userToken = localStorage.getItem("token");
 
   if (localStorage.getItem("token") !== null) {
     await fetch("https://event.setn.com/api/2022moonTest/spinToWin/histories", {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${userToken}`
-            },
+        Authorization: `${userToken}`,
+      },
     })
       .then((data) => {
         return data.json();
@@ -142,12 +140,12 @@ async function getUserTurnTableResult() {
       .catch((error) => {
         console.log(error);
       });
-      userFinalTurnTableResults = JSON.parse(
-        localStorage.getItem("turnTableResults")
-      );
-      let finalUserTurnTable = "";
-      userFinalTurnTableResults.histories.map((val) => {
-        finalUserTurnTable += `
+    userFinalTurnTableResults = JSON.parse(
+      localStorage.getItem("turnTableResults")
+    );
+    let finalUserTurnTable = "";
+    userFinalTurnTableResults.histories.map((val) => {
+      finalUserTurnTable += `
         <li class="pointsbox">
         <div class="box-left">
           <span>${val.date}</span>
@@ -159,13 +157,12 @@ async function getUserTurnTableResult() {
         </div>
       </li>
     `;
-      });
-      turnTableResult.innerHTML = finalUserTurnTable;  
+    });
+    turnTableResult.innerHTML = finalUserTurnTable;
   }
 }
 
 function getUserIdFirst() {
-
   signed = localStorage.getItem("signed");
   userNumber = localStorage.getItem("userId");
   userToken = localStorage.getItem("token");
@@ -190,7 +187,8 @@ function getUserIdFirst() {
       document.getElementById("userLoginPoint").style.display = "block";
       document.getElementById("userLoginEventNumberValue").innerText =
         userNumber;
-      document.getElementById("userLoginPointValue").innerText = userPoint;
+      document.getElementById("userLoginPointValue").innerText =
+        finalData.point;
       getUserPointResult();
     })
     .catch((error) => {
@@ -199,7 +197,6 @@ function getUserIdFirst() {
       return false;
     });
 }
-
 
 function getUserId() {
   let userNumber = document.getElementById("userNumberInput").value;
@@ -222,8 +219,6 @@ function getUserId() {
         return data.json();
       })
       .then((finalData) => {
-
-
         localStorage.setItem("signed", finalData.signin.signed);
         localStorage.setItem("token", finalData.token);
         localStorage.setItem("userId", finalData.id);
