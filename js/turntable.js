@@ -192,9 +192,8 @@ async function start() {
     document.getElementById("fade").style.display = "block";
   } else if (firstQuota == 0 && !isStatr) {
     alert("剩餘次數不足喔");
-  } else {
+  } else if (firstQuota == 1 && !isStatr && finalQuota == 0) {
     alert("剩餘次數不足喔");
-    return false;
   }
 }
 
