@@ -259,7 +259,7 @@
   font-weight: bold;
 }
 
-.exam-block-lock::before{
+.exam-block-before{
   background-color: var(--colorMainblue);
   width:100%;
   height:100%;
@@ -269,8 +269,13 @@
   top:0;
   left:0;
   content: "";
-  z-index: 1;
+  z-index: 1; 
+  visibility: hidden;
 }
+
+
+
+
 
 .share-exam-true-container {
   position: relative;
@@ -282,6 +287,7 @@
   text-align: center;
   box-sizing: border-box;
   font-weight: bold;
+  z-index: 10;
 }
 
 .exambox{
@@ -339,6 +345,7 @@
 
 #share-exam-true, #share-exam-false, #share-exam-share,#share-exam-over{
   display:  none;
+  
 }
 
 .over-title{

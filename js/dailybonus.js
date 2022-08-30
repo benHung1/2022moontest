@@ -547,18 +547,22 @@ function getNewsAnswerA() {
     })
     .then((finalData) => {
       console.log(finalData);
-      document.getElementById("exambox").style.display = "none";
       localStorage.setItem("finalDailyQuota", finalData.quiz.quota);
       localStorage.setItem("finalAnswerAndShared", finalData.quiz.isRight);
 
       if (finalData.quiz.isRight) {
         document.getElementById("share-exam-true").style.display = "block";
-
         document.getElementById(
           "userLoginPointValue"
         ).innerText = `${finalData.point}`;
+        document.getElementsByClassName(
+          "exam-block-before"
+        )[0].style.visibility = "visible";
       } else {
         document.getElementById("share-exam-false").style.display = "block";
+        document.getElementsByClassName(
+          "exam-block-before"
+        )[0].style.visibility = "visible";
       }
     });
 }
@@ -583,7 +587,6 @@ function getNewsAnswerB() {
     })
     .then((finalData) => {
       console.log(finalData);
-      document.getElementById("exambox").style.display = "none";
       localStorage.setItem("finalDailyQuota", finalData.quiz.quota);
       localStorage.setItem("finalAnswerAndShared", finalData.quiz.isRight);
 
@@ -592,8 +595,14 @@ function getNewsAnswerB() {
         document.getElementById(
           "userLoginPointValue"
         ).innerText = `${finalData.point}`;
+        document.getElementsByClassName(
+          "exam-block-before"
+        )[0].style.visibility = "visible";
       } else {
         document.getElementById("share-exam-false").style.display = "block";
+        document.getElementsByClassName(
+          "exam-block-before"
+        )[0].style.visibility = "visible";
       }
     })
     .catch((error) => {
@@ -676,6 +685,8 @@ function popupClosed() {
   document.getElementById("share-exam-true").style.display = "none";
   document.getElementById("share-exam-share").style.display = "none";
   document.getElementById("share-exam-false").style.display = "none";
+  document.getElementsByClassName("exam-block-before")[0].style.visibility =
+    "hidden";
 }
 
 // 登入活動編號 彈窗
