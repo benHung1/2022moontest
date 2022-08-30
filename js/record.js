@@ -219,6 +219,9 @@ function getUserId() {
         return data.json();
       })
       .then((finalData) => {
+
+        localStorage.clear();
+
         localStorage.setItem("signed", finalData.signin.signed);
         localStorage.setItem("token", finalData.token);
         localStorage.setItem("userId", finalData.id);

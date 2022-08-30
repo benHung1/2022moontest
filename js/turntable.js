@@ -83,6 +83,9 @@ async function getUserId() {
         return data.json();
       })
       .then((finalData) => {
+
+        localStorage.clear();
+
         localStorage.setItem("signed", finalData.signin.signed);
         localStorage.setItem("token", finalData.token);
         localStorage.setItem("userId", finalData.id);
@@ -186,7 +189,13 @@ async function start() {
   firstQuota = localStorage.getItem("firstQuota");
   finalQuota = localStorage.getItem("finalQuota");
 
-  if (!getUserToken()) return;
+  if (!getUserToken() ) return;
+
+  if (finalQuota === '0' && !isStatr) {
+    alert('剩餘次數不足囉');
+    return;
+  }
+
 
   if (!isStatr && firstQuota > 0) {
     isStatr = true;
@@ -208,9 +217,7 @@ async function start() {
   } else if (localStorage.getItem("token") == null) {
     document.getElementById("popup").style.display = "block";
     document.getElementById("fade").style.display = "block";
-  } else {
-    alert("剩餘次數不足喔");
-  }
+  } 
 }
 
 function operation(ran) {

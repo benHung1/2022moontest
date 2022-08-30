@@ -488,17 +488,30 @@ function getNewsPopup() {
     document.getElementById("newsPopup").style.display = "block";
     document.getElementById("fade").style.display = "block";
     document.getElementById("share-exam-false").style.display = "none";
-    document.getElementById("exambox").style.display = "none";
+    document.getElementById("exambox").style.display = "block";
     document.getElementById("share-exam-over").style.display = "block";
+    document.getElementsByClassName(
+      "exam-block-before"
+    )[0].style.visibility = "visible";
   }
 
-  // 已經分享並且答對兩次
+  // 分享後並且答對
 
-  if (finalAnswerAndShared && shared == "true") {
+  if(finalAnswerAndShared == 'true' && shared == "true") {
     document.getElementById("fade").style.display = "block";
     document.getElementById("newsPopup").style.display = "block";
     document.getElementById("share-exam-over").style.display = "block";
-    document.getElementById("exambox").style.display = "none";
+    document.getElementsByClassName(
+      "exam-block-before"
+    )[0].style.visibility = "visible";
+  }
+
+  // 已經分享後並且答錯
+
+  else if (finalAnswerAndShared == 'false' && shared == "true") {
+    document.getElementById("fade").style.display = "block";
+    document.getElementById("newsPopup").style.display = "block";
+    document.getElementById("exambox").style.display = "block";
   }
   // 已經分享
   else if (shared == "true") {
@@ -511,15 +524,19 @@ function getNewsPopup() {
     document.getElementById("fade").style.display = "block";
     document.getElementById("newsPopup").style.display = "block";
     document.getElementById("share-exam-share").style.display = "block";
-    document.getElementById("exambox").style.display = "none";
-  }
+    document.getElementsByClassName(
+      "exam-block-before"
+    )[0].style.visibility = "visible";
+}
   // 最終答題次數 = 0
   else if (finalDailyQuota == 0) {
     document.getElementById("fade").style.display = "block";
     document.getElementById("newsPopup").style.display = "block";
     document.getElementById("share-exam-over").style.display = "block";
-    document.getElementById("exambox").style.display = "none";
-  }
+    document.getElementsByClassName(
+      "exam-block-before"
+    )[0].style.visibility = "visible";
+  } 
 }
 
 function getOpenBookUrl() {

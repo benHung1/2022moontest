@@ -91,7 +91,7 @@
   font-size: 34px;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 432px) {
   .lucky-block {
     height: auto;
   }
@@ -100,11 +100,44 @@
   }
 }
 
+@media only screen and (max-width: 410px) {
+  .times-info {
+    position: absolute !important;
+    bottom: -5% !important;
+  }
+  .submitBtn {
+    top: 47% !important;
+  }
+
+}
+
+@media only screen and (max-width: 385px) {
+  .submitBtn {
+    top: 45% !important;
+  }
+  .times-info {
+    position: absolute !important;
+    bottom: 0% !important;
+  }
+
+}
+
+@media only screen and (max-width: 360px) {
+  .submitBtn {
+    top: 40% !important;
+  }
+  .times-info {
+    position: absolute !important;
+    bottom: 5% !important;
+  }
+
+}
+
+
 .wheel {
   background-size: 100% 100%;
   z-index: 10000;
   border-radius: 1rem;
-  margin-top: 50px;
 }
 
 .wheelBox {
@@ -194,6 +227,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 
 ::marker {
   font-size: 0;
