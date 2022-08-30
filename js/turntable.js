@@ -99,6 +99,12 @@ async function getUserId() {
   }
 }
 
+// token ture = 有值 才去執行以下
+
+function getUserToken() {
+  return !(userToken === null || userToken === undefined);
+}
+
 async function getQuota() {
   signed = localStorage.getItem("signed");
   userNumber = localStorage.getItem("userId");
@@ -125,6 +131,7 @@ async function getQuota() {
 }
 
 async function getfinalPrize() {
+  if (!getUserToken()) return;
   await fetch("https://event.setn.com/api/2022moonTest/spinToWin", {
     method: "POST",
     mode: "cors",
@@ -153,14 +160,15 @@ async function getfinalPrize() {
 
 PrizeSon = [
   "燒肉眾二代目500元券",
-  "燒肉哦爺500元券",
+  "燒肉眾哦爺500元券",
   "鹿兒島燒肉500元券",
   "燒肉眾500元券",
   "再接再厲",
-  "3D優質按摩滾筒",
-  "7-11壹佰元禮券",
+  "3D硬質按摩滾筒",
+  "7-11壹百元禮券",
   "電動按摩筋膜槍",
 ];
+
 totalNum = 8; // 轉盤 總數
 turnNum = [1, 2, 3, 4, 5, 6, 7, 8]; //概率 獎品編號
 isStatr = false; //鎖住 不能重複點擊;
@@ -178,21 +186,29 @@ async function start() {
   firstQuota = localStorage.getItem("firstQuota");
   finalQuota = localStorage.getItem("finalQuota");
 
+  if (!getUserToken()) return;
+
   if (!isStatr && firstQuota > 0) {
     isStatr = true;
     await this.getfinalPrize();
-    if (startItem != "") {
-      random = PrizeSon.indexOf(startItem);
-      operation(random);
+
+    // startItem 為 "" || null || undefined時 再反轉
+
+    if (!startItem) {
+      return;
     } else {
-      return false;
+      random = PrizeSon.indexOf(startItem);
+      if (random === -1) return;
+
+      operation(random);
+
+      // console.log("startItem" + startItem);
+      // console.log("random" + random);
     }
   } else if (localStorage.getItem("token") == null) {
     document.getElementById("popup").style.display = "block";
     document.getElementById("fade").style.display = "block";
-  } else if (firstQuota == 0 && !isStatr) {
-    alert("剩餘次數不足喔");
-  } else if (firstQuota == 1 && !isStatr && finalQuota == 0) {
+  } else {
     alert("剩餘次數不足喔");
   }
 }
