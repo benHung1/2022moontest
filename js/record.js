@@ -46,7 +46,6 @@ window.onload = function () {
   if (localStorage.getItem("token") !== null) {
     getUserIdFirst();
   } else {
-    console.log("沒token");
   }
 };
 
@@ -118,8 +117,6 @@ async function getUserPointResult() {
 
       pointFinalResult = Object.values(userFinalPointResults.histories);
 
-      console.log(pointFinalResult);
-
       pointFinalResult.map((val) => {
         finalUserPointsRuslts += `
           <li class="pointsbox">
@@ -158,7 +155,6 @@ async function getUserTurnTableResult() {
         return data.json();
       })
       .then((finalData) => {
-        console.log(finalData);
         localStorage.setItem("turnTableResults", JSON.stringify(finalData));
       })
       .catch((error) => {
@@ -189,8 +185,6 @@ async function getUserTurnTableResult() {
       let finalUserTurnTableRuslts = "";
 
       pointFinalResult = Object.values(userFinalTurnTableResults.histories);
-
-      console.log(pointFinalResult);
 
       pointFinalResult.map((val) => {
         finalUserTurnTableRuslts += `
@@ -227,8 +221,6 @@ function getUserIdFirst() {
       return data.json();
     })
     .then((finalData) => {
-      console.log(finalData);
-
       popupClosed();
       document.getElementById("userLoginNumber").style.display = "none";
       document.getElementById("userLoginEventNumber").style.display = "block";

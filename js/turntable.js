@@ -62,7 +62,6 @@ window.onload = function () {
   if (localStorage.getItem("token") !== null) {
     getQuota();
   } else {
-    console.log("沒token");
   }
 };
 
@@ -127,7 +126,6 @@ async function getQuota() {
       return data.json();
     })
     .then((finalData) => {
-      console.log(finalData);
       localStorage.setItem("firstQuota", finalData.spinToWin.quota);
       document.getElementById("count").innerText = finalData.spinToWin.quota;
     })
@@ -150,8 +148,6 @@ async function getfinalPrize() {
       return data.json();
     })
     .then((finalData) => {
-      console.log(finalData);
-
       finalPrize = finalData.spinToWin.win.name;
       localStorage.setItem("finalQuota", finalData.spinToWin.quota);
       // 取出轉完的扣打

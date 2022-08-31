@@ -100,7 +100,6 @@ window.onload = function () {
   if (localStorage.getItem("token") !== null) {
     getUserIdFirst();
   } else {
-    console.log("沒token");
   }
 };
 
@@ -121,8 +120,6 @@ function getUserIdFirst() {
       return data.json();
     })
     .then((finalData) => {
-      console.log(finalData);
-
       popupClosed();
       document.getElementById("userLoginNumber").style.display = "none";
       document.getElementById("userLoginEventNumber").style.display = "block";
@@ -165,7 +162,6 @@ function getUserIdFirst() {
               return data.json();
             })
             .then((finalData) => {
-              console.log(finalData);
               document.getElementById("userLoginPointValue").innerText =
                 finalData.point;
               notSigninFinished = document.getElementsByClassName(
@@ -242,11 +238,9 @@ function getUserIdFirst() {
                   ) {
                     document.getElementById("eggpopup").style.display = "block";
                     document.getElementById("fade").style.display = "block";
-                    document.getElementById(
-                      "surprisePoints"
-                    ).innerText = `5點`;
+                    document.getElementById("surprisePoints").innerText = `5點`;
                     document.getElementById("userLoginPointValue").innerText =
-                    finalData.bonus.point;            
+                      finalData.bonus.point;
                   }
                 }
               }
@@ -289,7 +283,6 @@ function getUserId() {
         if (localStorage.getItem("token") !== null) {
           document.getElementById("signtomorrow-btn").style.display = "none";
         }
-        console.log(finalData);
 
         // 簽到完後存入 正確最新的點數
 
@@ -345,7 +338,6 @@ function getUserId() {
                 return data.json();
               })
               .then((finalData) => {
-                console.log(finalData);
                 notSigninFinished = document.getElementsByClassName(
                   "normal-box-container"
                 )[0];
@@ -426,8 +418,8 @@ function getUserId() {
                         "surprisePoints"
                       ).innerText = `5點`;
                       document.getElementById("userLoginPointValue").innerText =
-                      finalData.bonus.point;            
-                      }
+                        finalData.bonus.point;
+                    }
                   }
                 }
               })
@@ -469,7 +461,6 @@ function getNewsPopup() {
         return data.json();
       })
       .then((finalData) => {
-        console.log(finalData);
         document.getElementById(
           "question"
         ).innerText = `Q. ${finalData[0].text}`;
@@ -494,25 +485,22 @@ function getNewsPopup() {
     document.getElementById("share-exam-false").style.display = "none";
     document.getElementById("exambox").style.display = "block";
     document.getElementById("share-exam-over").style.display = "block";
-    document.getElementsByClassName(
-      "exam-block-before"
-    )[0].style.visibility = "visible";
+    document.getElementsByClassName("exam-block-before")[0].style.visibility =
+      "visible";
   }
 
   // 分享後並且答對
 
-  if(finalAnswerAndShared == 'true' && shared == "true") {
+  if (finalAnswerAndShared == "true" && shared == "true") {
     document.getElementById("fade").style.display = "block";
     document.getElementById("newsPopup").style.display = "block";
     document.getElementById("share-exam-over").style.display = "block";
-    document.getElementsByClassName(
-      "exam-block-before"
-    )[0].style.visibility = "visible";
+    document.getElementsByClassName("exam-block-before")[0].style.visibility =
+      "visible";
   }
 
   // 已經分享後並且答錯
-
-  else if (finalAnswerAndShared == 'false' && shared == "true") {
+  else if (finalAnswerAndShared == "false" && shared == "true") {
     document.getElementById("fade").style.display = "block";
     document.getElementById("newsPopup").style.display = "block";
     document.getElementById("exambox").style.display = "block";
@@ -528,19 +516,17 @@ function getNewsPopup() {
     document.getElementById("fade").style.display = "block";
     document.getElementById("newsPopup").style.display = "block";
     document.getElementById("share-exam-share").style.display = "block";
-    document.getElementsByClassName(
-      "exam-block-before"
-    )[0].style.visibility = "visible";
-}
+    document.getElementsByClassName("exam-block-before")[0].style.visibility =
+      "visible";
+  }
   // 最終答題次數 = 0
   else if (finalDailyQuota == 0) {
     document.getElementById("fade").style.display = "block";
     document.getElementById("newsPopup").style.display = "block";
     document.getElementById("share-exam-over").style.display = "block";
-    document.getElementsByClassName(
-      "exam-block-before"
-    )[0].style.visibility = "visible";
-  } 
+    document.getElementsByClassName("exam-block-before")[0].style.visibility =
+      "visible";
+  }
 }
 
 function getOpenBookUrl() {
@@ -567,7 +553,6 @@ function getNewsAnswerA() {
       return data.json();
     })
     .then((finalData) => {
-      console.log(finalData);
       localStorage.setItem("finalDailyQuota", finalData.quiz.quota);
       localStorage.setItem("finalAnswerAndShared", finalData.quiz.isRight);
 
@@ -607,7 +592,6 @@ function getNewsAnswerB() {
       return data.json();
     })
     .then((finalData) => {
-      console.log(finalData);
       localStorage.setItem("finalDailyQuota", finalData.quiz.quota);
       localStorage.setItem("finalAnswerAndShared", finalData.quiz.isRight);
 
@@ -655,8 +639,6 @@ function shareFaceBook() {
       return data.json();
     })
     .then((finalData) => {
-      console.log(finalData);
-
       localStorage.setItem("shared", finalData.quiz.shared);
       localStorage.removeItem("finalAnswerAndShared");
 
