@@ -54,6 +54,10 @@ let signed;
 
 let userId;
 
+let firstQuota;
+
+let finalQuota;
+
 window.onload = function () {
   if (localStorage.getItem("token") !== null) {
     getQuota();
@@ -83,7 +87,6 @@ async function getUserId() {
         return data.json();
       })
       .then((finalData) => {
-
         localStorage.clear();
 
         localStorage.setItem("signed", finalData.signin.signed);
@@ -180,25 +183,24 @@ turn = 4; //轉盤最低幾圈 你想幾圈
 
 // 取出剛進頁面的扣打
 
-let firstQuota;
-
-let finalQuota;
-
 //開始
 async function start() {
   firstQuota = localStorage.getItem("firstQuota");
   finalQuota = localStorage.getItem("finalQuota");
 
-  if (!getUserToken() ) {
+  if (!getUserToken()) {
     document.getElementById("popup").style.display = "block";
     document.getElementById("fade").style.display = "block";
-  };
-
-  if (finalQuota === '0' && !isStatr) {
-    alert('剩餘次數不足囉');
-    return;
   }
 
+  if (
+    finalQuota === "0" &&
+    !isStatr &&
+    document.getElementById("count").innerText === "0"
+  ) {
+    alert("剩餘次數不足囉");
+    return;
+  }
 
   if (!isStatr && firstQuota > 0) {
     isStatr = true;
@@ -217,7 +219,7 @@ async function start() {
       // console.log("startItem" + startItem);
       // console.log("random" + random);
     }
-  } 
+  }
 }
 
 function operation(ran) {

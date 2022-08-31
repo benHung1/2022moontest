@@ -98,6 +98,7 @@ async function getUserPointResult() {
     if (typeof userFinalPointResults === "array") {
       let finalUserPoints = "";
 
+      userFinalPointResults.histories.reverse();
       userFinalPointResults.histories.map((val) => {
         finalUserPoints += `
             <li class="pointsbox">
