@@ -166,22 +166,46 @@ async function getUserTurnTableResult() {
     userFinalTurnTableResults = JSON.parse(
       localStorage.getItem("turnTableResults")
     );
-    let finalUserTurnTable = "";
-    userFinalTurnTableResults.histories.map((val) => {
-      finalUserTurnTable += `
-        <li class="pointsbox">
-        <div class="box-left">
-          <span>${val.date}</span>
-          <b class="join-item">參加轉盤兌換</b>
-          <b>${val.description}</b>
-        </div>
-        <div class="box-right">
-          <p><strong>${val.point}</strong>點</p>
-        </div>
-      </li>
-    `;
-    });
-    turnTableResult.innerHTML = finalUserTurnTable;
+
+    if (typeof userFinalTurnTableResults === "array") {
+      let finalUserTurnTable = "";
+      userFinalTurnTableResults.histories.map((val) => {
+        finalUserTurnTable += `
+            <li class="pointsbox">
+            <div class="box-left">
+              <span>${val.date}</span>
+              <b class="join-item">參加轉盤兌換</b>
+              <b>${val.description}</b>
+            </div>
+            <div class="box-right">
+              <p><strong>${val.point}</strong>點</p>
+            </div>
+          </li>
+        `;
+      });
+      turnTableResult.innerHTML = finalUserTurnTable;
+    } else {
+      let finalUserTurnTableRuslts = "";
+
+      pointFinalResult = Object.values(userFinalTurnTableResults.histories);
+
+      console.log(pointFinalResult);
+
+      pointFinalResult.map((val) => {
+        finalUserTurnTableRuslts += `
+          <li class="pointsbox">
+          <div class="box-left">
+            <span id="pointDate">${val.date}</span>
+            <p id="desc">${val.description}</p>
+          </div>
+          <div class="box-right">
+            <p id="point"><strong></strong>${val.point}點</p>
+          </div>
+        </li>
+          `;
+      });
+      turnTableResult.innerHTML = finalUserTurnTableRuslts;
+    }
   }
 }
 
