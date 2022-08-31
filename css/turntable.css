@@ -110,32 +110,42 @@
   }
   .wheel .submitBtn {
     top: 47% !important;
+    left: 47% !important;
   }
-
+  .wheel-btn {
+    left: 40% !important;
+  }
 }
 
 @media only screen and (max-width: 385px) {
-  .submitBtn {
+  .wheel .submitBtn {
     top: 45% !important;
+    left: 44% !important;
   }
+
+  .wheel-btn {
+    left: 37% !important;
+  }
+
   .times-info {
     position: absolute !important;
     bottom: 0% !important;
   }
-
 }
 
 @media only screen and (max-width: 360px) {
-  .submitBtn {
+  .wheel .submitBtn {
     top: 40% !important;
+    left: 40% !important;
+  }
+  .wheel-btn {
+    left: 35% !important;
   }
   .times-info {
     position: absolute !important;
     bottom: 5% !important;
   }
-
 }
-
 
 .wheel {
   background-size: 100% 100%;
@@ -230,7 +240,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
 
 ::marker {
   font-size: 0;

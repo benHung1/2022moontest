@@ -86,7 +86,7 @@ async function getUserPointResult() {
         return data.json();
       })
       .then((finalData) => {
-        console.log(finalData);
+        // console.log(typeof finalData.histories === "object");
         localStorage.setItem("pointResults", JSON.stringify(finalData));
       })
       .catch((error) => {
@@ -95,10 +95,32 @@ async function getUserPointResult() {
 
     userFinalPointResults = JSON.parse(localStorage.getItem("pointResults"));
 
-    let finalUserPoints = "";
+    if (typeof userFinalPointResults === "array") {
+      let finalUserPoints = "";
 
-    userFinalPointResults.histories.map((val) => {
-      finalUserPoints += `
+      userFinalPointResults.histories.map((val) => {
+        finalUserPoints += `
+            <li class="pointsbox">
+            <div class="box-left">
+              <span id="pointDate">${val.date}</span>
+              <p id="desc">${val.description}</p>
+            </div>
+            <div class="box-right">
+              <p id="point"><strong></strong>${val.point}點</p>
+            </div>
+          </li>
+            `;
+      });
+      pointResult.innerHTML = finalUserPoints;
+    } else {
+      let finalUserPointsRuslts = "";
+
+      pointFinalResult = Object.values(userFinalPointResults.histories);
+
+      console.log(pointFinalResult);
+
+      pointFinalResult.map((val) => {
+        finalUserPointsRuslts += `
           <li class="pointsbox">
           <div class="box-left">
             <span id="pointDate">${val.date}</span>
@@ -109,8 +131,9 @@ async function getUserPointResult() {
           </div>
         </li>
           `;
-    });
-    pointResult.innerHTML = finalUserPoints;
+      });
+      pointResult.innerHTML = finalUserPointsRuslts;
+    }
   }
 }
 
@@ -219,7 +242,6 @@ function getUserId() {
         return data.json();
       })
       .then((finalData) => {
-
         localStorage.clear();
 
         localStorage.setItem("signed", finalData.signin.signed);
