@@ -250,9 +250,10 @@ function getUserIdFirst() {
                   ) {
                     document.getElementById("eggpopup").style.display = "block";
                     document.getElementById("fade").style.display = "block";
-                    document.getElementById("surprisePoints").innerText = `5點`;
-                    document.getElementById("userLoginPointValue").innerText =
+                    document.getElementById("surprisePoints").innerText =
                       finalData.bonus.point;
+                    document.getElementById("userLoginPointValue").innerText =
+                      finalData.point;
                   }
                 }
               }
@@ -427,11 +428,10 @@ function getUserId() {
                       document.getElementById("eggpopup").style.display =
                         "block";
                       document.getElementById("fade").style.display = "block";
-                      document.getElementById(
-                        "surprisePoints"
-                      ).innerText = `5點`;
-                      document.getElementById("userLoginPointValue").innerText =
+                      document.getElementById("surprisePoints").innerText =
                         finalData.bonus.point;
+                      document.getElementById("userLoginPointValue").innerText =
+                        finalData.point;
                     }
                   }
                 }
