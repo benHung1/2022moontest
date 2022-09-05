@@ -747,7 +747,7 @@ function refreshAt(hours, minutes, seconds) {
 
 refreshAt(0, 0, 0);
 
-// another way
+// another way 2
 
 // function getDailyQuotaTime() {
 //   let timer = setInterval(function () {
