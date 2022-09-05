@@ -99,9 +99,21 @@ let signed;
 window.onload = function () {
   if (localStorage.getItem("token") !== null) {
     getUserIdFirst();
+    getDailyQuotaTime();
   } else {
   }
 };
+
+function store(key, value, expire) {
+  let obj = {
+    time: new Date().getTime(),
+    value: value,
+    expire: expire,
+  };
+  // 要先將物件轉成字串
+  let objStr = JSON.stringify(obj);
+  localStorage.setItem(key, objStr);
+}
 
 function getUserIdFirst() {
   signed = localStorage.getItem("signed");
@@ -179,56 +191,56 @@ function getUserIdFirst() {
                   siginFinished.nextElementSibling.classList.add("finished");
                   // 如果簽到天數為三的位數 && 前面兩天都有簽到的話
                   if (
-                    (siginFinished.nextElementSibling.firstElementChild
-                      .innerText == "DAY 3" &&
+                    (siginFinished.nextElementSibling.children[1].innerText ==
+                      "DAY 3" &&
                       document
                         .getElementsByClassName("normal-box-container")[0]
                         .classList.contains("finished") == true &&
                       document
                         .getElementsByClassName("normal-box-container")[1]
                         .classList.contains("finished") == true) ||
-                    (siginFinished.nextElementSibling.firstElementChild
-                      .innerText == "DAY 6" &&
+                    (siginFinished.nextElementSibling.children[1].innerText ==
+                      "DAY 6" &&
                       document
                         .getElementsByClassName("normal-box-container")[3]
                         .classList.contains("finished") == true &&
                       document
                         .getElementsByClassName("normal-box-container")[4]
                         .classList.contains("finished") == true) ||
-                    (siginFinished.nextElementSibling.firstElementChild
-                      .innerText == "DAY 9" &&
+                    (siginFinished.nextElementSibling.children[1].innerText ==
+                      "DAY 9" &&
                       document
                         .getElementsByClassName("normal-box-container")[6]
                         .classList.contains("finished") == true &&
                       document
                         .getElementsByClassName("normal-box-container")[7]
                         .classList.contains("finished") == true) ||
-                    (siginFinished.nextElementSibling.firstElementChild
-                      .innerText == "DAY 12" &&
+                    (siginFinished.nextElementSibling.children[1].innerText ==
+                      "DAY 12" &&
                       document
                         .getElementsByClassName("normal-box-container")[9]
                         .classList.contains("finished") == true &&
                       document
                         .getElementsByClassName("normal-box-container")[10]
                         .classList.contains("finished") == true) ||
-                    (siginFinished.nextElementSibling.firstElementChild
-                      .innerText == "DAY 15" &&
+                    (siginFinished.nextElementSibling.children[1].innerText ==
+                      "DAY 15" &&
                       document
                         .getElementsByClassName("normal-box-container")[12]
                         .classList.contains("finished") == true &&
                       document
                         .getElementsByClassName("normal-box-container")[13]
                         .classList.contains("finished") == true) ||
-                    (siginFinished.nextElementSibling.firstElementChild
-                      .innerText == "DAY 18" &&
+                    (siginFinished.nextElementSibling.children[1].innerText ==
+                      "DAY 18" &&
                       document
                         .getElementsByClassName("normal-box-container")[15]
                         .classList.contains("finished") == true &&
                       document
                         .getElementsByClassName("normal-box-container")[16]
                         .classList.contains("finished") == true) ||
-                    (siginFinished.nextElementSibling.firstElementChild
-                      .innerText == "DAY 21" &&
+                    (siginFinished.nextElementSibling.children[1].innerText ==
+                      "DAY 21" &&
                       document
                         .getElementsByClassName("normal-box-container")[19]
                         .classList.contains("finished") == true &&
@@ -249,6 +261,7 @@ function getUserIdFirst() {
               console.log(error);
             });
         });
+      store("dailyQuotaTime", finalData.quiz.quota, 86400000);
       localStorage.setItem("dailyQuota", finalData.quiz.quota);
     })
     .catch((error) => {
@@ -354,56 +367,56 @@ function getUserId() {
                     siginFinished.nextElementSibling.classList.add("finished");
                     // 如果簽到天數為三的位數 && 前面兩天都有簽到的話
                     if (
-                      (siginFinished.nextElementSibling.firstElementChild
-                        .innerText == "DAY 3" &&
+                      (siginFinished.nextElementSibling.children[1].innerText ==
+                        "DAY 3" &&
                         document
                           .getElementsByClassName("normal-box-container")[0]
                           .classList.contains("finished") == true &&
                         document
                           .getElementsByClassName("normal-box-container")[1]
                           .classList.contains("finished") == true) ||
-                      (siginFinished.nextElementSibling.firstElementChild
-                        .innerText == "DAY 6" &&
+                      (siginFinished.nextElementSibling.children[1].innerText ==
+                        "DAY 6" &&
                         document
                           .getElementsByClassName("normal-box-container")[3]
                           .classList.contains("finished") == true &&
                         document
                           .getElementsByClassName("normal-box-container")[4]
                           .classList.contains("finished") == true) ||
-                      (siginFinished.nextElementSibling.firstElementChild
-                        .innerText == "DAY 9" &&
+                      (siginFinished.nextElementSibling.children[1].innerText ==
+                        "DAY 9" &&
                         document
                           .getElementsByClassName("normal-box-container")[6]
                           .classList.contains("finished") == true &&
                         document
                           .getElementsByClassName("normal-box-container")[7]
                           .classList.contains("finished") == true) ||
-                      (siginFinished.nextElementSibling.firstElementChild
-                        .innerText == "DAY 12" &&
+                      (siginFinished.nextElementSibling.children[1].innerText ==
+                        "DAY 12" &&
                         document
                           .getElementsByClassName("normal-box-container")[9]
                           .classList.contains("finished") == true &&
                         document
                           .getElementsByClassName("normal-box-container")[10]
                           .classList.contains("finished") == true) ||
-                      (siginFinished.nextElementSibling.firstElementChild
-                        .innerText == "DAY 15" &&
+                      (siginFinished.nextElementSibling.children[1].innerText ==
+                        "DAY 15" &&
                         document
                           .getElementsByClassName("normal-box-container")[12]
                           .classList.contains("finished") == true &&
                         document
                           .getElementsByClassName("normal-box-container")[13]
                           .classList.contains("finished") == true) ||
-                      (siginFinished.nextElementSibling.firstElementChild
-                        .innerText == "DAY 18" &&
+                      (siginFinished.nextElementSibling.children[1].innerText ==
+                        "DAY 18" &&
                         document
                           .getElementsByClassName("normal-box-container")[15]
                           .classList.contains("finished") == true &&
                         document
                           .getElementsByClassName("normal-box-container")[16]
                           .classList.contains("finished") == true) ||
-                      (siginFinished.nextElementSibling.firstElementChild
-                        .innerText == "DAY 21" &&
+                      (siginFinished.nextElementSibling.children[1].innerText ==
+                        "DAY 21" &&
                         document
                           .getElementsByClassName("normal-box-container")[19]
                           .classList.contains("finished") == true &&
@@ -427,7 +440,7 @@ function getUserId() {
                 console.log(error);
               });
           });
-
+        store("dailyQuotaTime", finalData.quiz.quota, 86400000);
         localStorage.setItem("dailyQuota", finalData.quiz.quota);
       })
       .catch((error) => {
@@ -439,6 +452,7 @@ function getUserId() {
 }
 
 function getNewsPopup() {
+  dailyQuotaTime = JSON.parse(localStorage.getItem("dailyQuotaTime"));
   dailyQuota = localStorage.getItem("dailyQuota");
   finalDailyQuota = localStorage.getItem("finalDailyQuota");
   shared = localStorage.getItem("shared");
@@ -697,4 +711,21 @@ function popupClosed() {
 function getUserLogin() {
   document.getElementById("fade").style.display = "block";
   document.getElementById("popup").style.display = "block";
+}
+
+//  每日重整頁面 重整問答次數
+
+function getDailyQuotaTime() {
+  let timer = setInterval(function () {
+    if (localStorage.getItem("dailyQuotaTime")) {
+      let dailyQuotaTime = localStorage.getItem("dailyQuotaTime");
+      let nameObj = JSON.parse(dailyQuotaTime);
+      // console.log(new Date().getTime() - nameObj.time);
+      if (new Date().getTime() - nameObj.time >= nameObj.expire) {
+        location.reload();
+      }
+    } else {
+      clearInterval(timer);
+    }
+  }, 1000);
 }
