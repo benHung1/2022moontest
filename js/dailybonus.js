@@ -99,21 +99,22 @@ let signed;
 window.onload = function () {
   if (localStorage.getItem("token") !== null) {
     getUserIdFirst();
-    getDailyQuotaTime();
   } else {
   }
 };
 
-function store(key, value, expire) {
-  let obj = {
-    time: new Date().getTime(),
-    value: value,
-    expire: expire,
-  };
-  // 要先將物件轉成字串
-  let objStr = JSON.stringify(obj);
-  localStorage.setItem(key, objStr);
-}
+// another way
+
+// function store(key, value, expire) {
+//   let obj = {
+//     time: new Date().getTime(),
+//     value: value,
+//     expire: expire,
+//   };
+//   // 要先將物件轉成字串
+//   let objStr = JSON.stringify(obj);
+//   localStorage.setItem(key, objStr);
+// }
 
 function getUserIdFirst() {
   signed = localStorage.getItem("signed");
@@ -263,7 +264,7 @@ function getUserIdFirst() {
               console.log(error);
             });
         });
-      store("dailyQuotaTime", finalData.quiz.quota, 86400000);
+      // store("dailyQuotaTime", finalData.quiz.quota, 86400000);
       localStorage.setItem("dailyQuota", finalData.quiz.quota);
     })
     .catch((error) => {
@@ -442,7 +443,7 @@ function getUserId() {
                 console.log(error);
               });
           });
-        store("dailyQuotaTime", finalData.quiz.quota, 86400000);
+        // store("dailyQuotaTime", finalData.quiz.quota, 86400000);
         localStorage.setItem("dailyQuota", finalData.quiz.quota);
       })
       .catch((error) => {
@@ -634,7 +635,6 @@ function getNewsAnswerB() {
 function newsClickOk() {
   quizUrl = localStorage.getItem("quizUrl");
   window.open(quizUrl);
-  // document.getElementsByClassName("exambtn")[0].innerText = "分享";
   popupClosed();
 }
 
@@ -666,13 +666,11 @@ function shareFaceBook() {
 }
 function dailyBonusGetStared() {
   userId = localStorage.getItem("userId");
-  // if(userId !== '' ) {
   document.getElementById("loginbtn-start").style.display = "none";
   document.getElementById("signtoday-btn").style.display = "block";
 
   document.getElementById("newsbtn-exam grey").style.display = "none";
   document.getElementById("newsbtn-exam").style.display = "block";
-  // }
 }
 
 // 會員編號彈窗
@@ -715,19 +713,53 @@ function getUserLogin() {
   document.getElementById("popup").style.display = "block";
 }
 
-//  每日重整頁面 重整問答次數
+//  每日24點重整頁面 刷新問答次數
 
-function getDailyQuotaTime() {
-  let timer = setInterval(function () {
-    if (localStorage.getItem("dailyQuotaTime")) {
-      let dailyQuotaTime = localStorage.getItem("dailyQuotaTime");
-      let nameObj = JSON.parse(dailyQuotaTime);
-      // console.log(new Date().getTime() - nameObj.time);
-      if (new Date().getTime() - nameObj.time >= nameObj.expire) {
-        location.reload();
-      }
-    } else {
-      clearInterval(timer);
-    }
-  }, 1000);
+function refreshAt(hours, minutes, seconds) {
+  let now = new Date();
+  let then = new Date();
+
+  if (
+    now.getHours() > hours ||
+    (now.getHours() == hours && now.getMinutes() > minutes) ||
+    (now.getHours() == hours &&
+      now.getMinutes() == minutes &&
+      now.getSeconds() >= seconds)
+  ) {
+    then.setDate(now.getDate() + 1);
+  }
+  then.setHours(hours);
+  then.setMinutes(minutes);
+  then.setSeconds(seconds);
+
+  let timeout = then.getTime() - now.getTime();
+
+  setTimeout(function () {
+    localStorage.removeItem("shared");
+    localStorage.removeItem("quizId");
+    localStorage.removeItem("quizUrl");
+    localStorage.removeItem("finalAnswerAndShared");
+    localStorage.removeItem("finalDailyQuota");
+
+    location.reload();
+  }, timeout);
 }
+
+refreshAt(0, 0, 0);
+
+// another way
+
+// function getDailyQuotaTime() {
+//   let timer = setInterval(function () {
+//     if (localStorage.getItem("dailyQuotaTime")) {
+//       let dailyQuotaTime = localStorage.getItem("dailyQuotaTime");
+//       let nameObj = JSON.parse(dailyQuotaTime);
+//       // console.log(new Date().getTime() - nameObj.time);
+//       if (new Date().getTime() - nameObj.time >= nameObj.expire) {
+//         location.reload();
+//       }
+//     } else {
+//       clearInterval(timer);
+//     }
+//   }, 1000);
+// }
