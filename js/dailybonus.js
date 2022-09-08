@@ -133,6 +133,12 @@ function getUserIdFirst() {
       return data.json();
     })
     .then((finalData) => {
+      localStorage.removeItem("shared");
+      localStorage.removeItem("quizId");
+      localStorage.removeItem("quizUrl");
+      localStorage.removeItem("finalAnswerAndShared");
+      localStorage.removeItem("finalDailyQuota");
+
       popupClosed();
       document.getElementById("userLoginNumber").style.display = "none";
       document.getElementById("userLoginEventNumber").style.display = "block";
@@ -529,7 +535,7 @@ function getNewsPopup() {
     document.getElementById("exambox").style.display = "block";
   }
   // 答對一次後
-  else if (finalDailyQuota == 1) {
+  else if (finalDailyQuota == 1 || dailyQuota == 1) {
     document.getElementById("fade").style.display = "block";
     document.getElementById("newsPopup").style.display = "block";
     document.getElementById("share-exam-share").style.display = "block";
